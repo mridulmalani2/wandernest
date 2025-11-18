@@ -28,6 +28,12 @@ enum RequestStatus {
   CANCELLED
 }
 
+enum AdminRole {
+  SUPER_ADMIN
+  MODERATOR
+  SUPPORT
+}
+
 // ============================================
 // MODELS
 // ============================================
@@ -132,11 +138,13 @@ model RequestSelection {
   studentId         String
   status            String         // pending, accepted, rejected
   message           String?        @db.Text
+  pricePaid         Float?         // Actual price paid for the service
 
   request           TouristRequest @relation(fields: [requestId], references: [id])
   student           Student        @relation(fields: [studentId], references: [id])
 
   createdAt         DateTime       @default(now())
+  acceptedAt        DateTime?      // For analytics - response time calculation
 
   @@index([requestId])
   @@index([studentId])
@@ -171,4 +179,33 @@ model Report {
 
   @@index([studentId])
   @@index([status])
+}
+
+model Admin {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  passwordHash      String
+  name              String
+  role              AdminRole @default(MODERATOR)
+  isActive          Boolean  @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([email])
+  @@index([role])
+}
+
+model TouristSession {
+  id                String   @id @default(cuid())
+  email             String
+  verificationCode  String
+  token             String?  @unique
+  isVerified        Boolean  @default(false)
+  expiresAt         DateTime
+
+  createdAt         DateTime @default(now())
+
+  @@index([email])
+  @@index([token])
 }
