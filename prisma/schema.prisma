@@ -28,6 +28,15 @@ enum RequestStatus {
   CANCELLED
 }
 
+enum ReportType {
+  SAFETY_CONCERN
+  INAPPROPRIATE_BEHAVIOR
+  PAYMENT_DISPUTE
+  HARASSMENT
+  NO_SHOW
+  OTHER
+}
+
 // ============================================
 // MODELS
 // ============================================
@@ -48,6 +57,10 @@ model Student {
   status            StudentStatus @default(PENDING_APPROVAL)
   city              String
   priceRange        Json?    // {min: number, max: number}
+
+  // Safety
+  safetyGuidelinesAcknowledged Boolean @default(false)
+  safetyAcknowledgedAt         DateTime?
 
   // Metrics
   tripsHosted       Int      @default(0)
@@ -159,16 +172,22 @@ model Review {
 }
 
 model Report {
-  id                String   @id @default(cuid())
-  studentId         String
-  reason            String
-  description       String   @db.Text
-  status            String   // pending, reviewed, resolved
+  id                String     @id @default(cuid())
+  type              ReportType
+  reportedUserId    String     // ID of the user being reported (Student)
+  reportedBy        String     // Email or ID of person making report
+  description       String     @db.Text
+  status            String     @default("pending") // pending, under_review, resolved, dismissed
+  actionTaken       String?    @db.Text
+  reviewedAt        DateTime?
+  reviewedBy        String?    // Admin who reviewed
 
-  student           Student  @relation(fields: [studentId], references: [id])
+  student           Student    @relation(fields: [reportedUserId], references: [id])
 
-  createdAt         DateTime @default(now())
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 
-  @@index([studentId])
+  @@index([reportedUserId])
   @@index([status])
+  @@index([type])
 }
