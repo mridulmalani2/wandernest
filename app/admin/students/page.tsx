@@ -207,7 +207,7 @@ export default function StudentsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           <div>Trips: {student.tripsHosted}</div>
                           <div>No-shows: {student.noShowCount}</div>
-                          {student.acceptanceRate !== null && (
+                          {student.acceptanceRate != null && (
                             <div>Accept: {(student.acceptanceRate * 100).toFixed(0)}%</div>
                           )}
                         </td>
