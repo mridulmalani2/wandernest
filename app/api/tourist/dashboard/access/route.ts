@@ -39,14 +39,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Send verification email
-    const emailSent = await sendVerificationEmail(email, verificationCode)
-
-    if (!emailSent) {
-      return NextResponse.json(
-        { error: 'Failed to send verification email' },
-        { status: 500 }
-      )
-    }
+    await sendVerificationEmail(email, verificationCode)
 
     return NextResponse.json({
       success: true,
