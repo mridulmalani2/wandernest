@@ -1,11 +1,12 @@
-import { prisma } from '../lib/prisma';
-import { CreateReviewInput, ReviewMetrics, ReliabilityBadge } from '../types/review';
-import { isValidAttribute } from '../constants/reviewAttributes';
+import 'server-only'
+import { prisma } from '@/lib/prisma'
+import { CreateReviewInput, ReviewMetrics, ReliabilityBadge } from './types'
+import { isValidAttribute } from './constants'
 
 /**
  * Maximum allowed characters for review text
  */
-const MAX_REVIEW_TEXT_LENGTH = 500;
+const MAX_REVIEW_TEXT_LENGTH = 500
 
 /**
  * Creates a new review and updates student metrics
@@ -13,28 +14,28 @@ const MAX_REVIEW_TEXT_LENGTH = 500;
 export async function createReview(input: CreateReviewInput) {
   // Validate rating
   if (input.rating < 1 || input.rating > 5) {
-    throw new Error('Rating must be between 1 and 5');
+    throw new Error('Rating must be between 1 and 5')
   }
 
   // Validate text length
   if (input.text && input.text.length > MAX_REVIEW_TEXT_LENGTH) {
-    throw new Error(`Review text must not exceed ${MAX_REVIEW_TEXT_LENGTH} characters`);
+    throw new Error(`Review text must not exceed ${MAX_REVIEW_TEXT_LENGTH} characters`)
   }
 
   // Validate attributes
   for (const attribute of input.attributes) {
     if (!isValidAttribute(attribute)) {
-      throw new Error(`Invalid attribute: ${attribute}`);
+      throw new Error(`Invalid attribute: ${attribute}`)
     }
   }
 
   // Check if review already exists for this request
   const existingReview = await prisma.review.findUnique({
     where: { requestId: input.requestId },
-  });
+  })
 
   if (existingReview) {
-    throw new Error('A review already exists for this request');
+    throw new Error('A review already exists for this request')
   }
 
   // Create the review
@@ -49,12 +50,12 @@ export async function createReview(input: CreateReviewInput) {
       pricePaid: input.pricePaid,
       isAnonymous: input.isAnonymous ?? false,
     },
-  });
+  })
 
   // Update student metrics
-  await updateStudentMetrics(input.studentId, review);
+  await updateStudentMetrics(input.studentId, review)
 
-  return review;
+  return review
 }
 
 /**
@@ -69,29 +70,29 @@ export async function updateStudentMetrics(
   const allReviews = await prisma.review.findMany({
     where: { studentId },
     orderBy: { createdAt: 'desc' },
-  });
+  })
 
   if (allReviews.length === 0) {
-    return;
+    return
   }
 
   // Calculate new average rating
   const newAverage =
-    allReviews.reduce((acc, r) => acc + r.rating, 0) / allReviews.length;
+    allReviews.reduce((acc, r) => acc + r.rating, 0) / allReviews.length
 
   // Calculate completion rate (percentage of non-no-show experiences)
-  const completedExperiences = allReviews.filter((r) => !r.noShow).length;
-  const completionRate = (completedExperiences / allReviews.length) * 100;
+  const completedExperiences = allReviews.filter((r) => !r.noShow).length
+  const completionRate = (completedExperiences / allReviews.length) * 100
 
   // Calculate no-show count
-  const noShowCount = allReviews.filter((r) => r.noShow).length;
+  const noShowCount = allReviews.filter((r) => r.noShow).length
 
   // Determine reliability badge
-  let badge: ReliabilityBadge = 'bronze';
+  let badge: ReliabilityBadge = 'bronze'
   if (completionRate >= 95 && allReviews.length >= 10) {
-    badge = 'gold';
+    badge = 'gold'
   } else if (completionRate >= 90 && allReviews.length >= 5) {
-    badge = 'silver';
+    badge = 'silver'
   }
 
   // Update student record
@@ -103,14 +104,14 @@ export async function updateStudentMetrics(
       noShowCount: noShowCount,
       tripsHosted: completedExperiences,
     },
-  });
+  })
 
   return {
     averageRating: newAverage,
     completionRate,
     reliabilityBadge: badge,
     totalReviews: allReviews.length,
-  } as ReviewMetrics;
+  } as ReviewMetrics
 }
 
 /**
@@ -129,7 +130,7 @@ export async function getStudentReviews(studentId: string) {
       },
     },
     orderBy: { createdAt: 'desc' },
-  });
+  })
 }
 
 /**
@@ -145,21 +146,21 @@ export async function getStudentMetrics(studentId: string): Promise<ReviewMetric
       noShowCount: true,
       reviews: true,
     },
-  });
+  })
 
   if (!student) {
-    return null;
+    return null
   }
 
-  const totalReviews = student.reviews.length;
+  const totalReviews = student.reviews.length
   const completionRate = totalReviews > 0
     ? ((totalReviews - student.noShowCount) / totalReviews) * 100
-    : 0;
+    : 0
 
   return {
     averageRating: student.averageRating ?? 0,
     completionRate,
     reliabilityBadge: (student.reliabilityBadge as ReliabilityBadge) ?? 'bronze',
     totalReviews,
-  };
+  }
 }
