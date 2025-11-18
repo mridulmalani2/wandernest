@@ -147,8 +147,8 @@ export function BookingForm() {
   }
 
   const handleVerificationSuccess = (requestId: string) => {
-    // Redirect to success page or show success message
-    window.location.href = `/booking/success?id=${requestId}`
+    // Redirect to guide selection page to choose from matched students
+    window.location.href = `/booking/select-guide?requestId=${requestId}`
   }
 
   return (
