@@ -1,8 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Globe, GraduationCap, MessageCircle, Star, AlertTriangle, ChevronLeft } from 'lucide-react'
 
 export default function TouristLanding() {
+  const { data: session, status } = useSession()
+  const isTourist = session?.user?.userType === 'tourist'
+
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background */}
