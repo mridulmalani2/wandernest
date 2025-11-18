@@ -106,39 +106,44 @@ function calculateScore(student: any, request: TouristRequest): number {
  * Check if guide is available for requested dates
  */
 function checkAvailability(student: any, requestedDates: any): boolean {
-  if (!student.availability || student.availability.length === 0) {
-    return false
-  }
-
-  // Parse requested dates
-  const dates = typeof requestedDates === 'string'
-    ? JSON.parse(requestedDates)
-    : requestedDates
-
-  let checkDates: Date[] = []
-
-  if (dates.start && dates.end) {
-    // Date range - check all days
-    const start = new Date(dates.start)
-    const end = new Date(dates.end)
-    const current = new Date(start)
-
-    while (current <= end) {
-      checkDates.push(new Date(current))
-      current.setDate(current.getDate() + 1)
+  try {
+    if (!student.availability || student.availability.length === 0) {
+      return false
     }
-  } else if (dates.date) {
-    // Single date
-    checkDates.push(new Date(dates.date))
-  } else {
+
+    // Parse requested dates
+    const dates = typeof requestedDates === 'string'
+      ? JSON.parse(requestedDates)
+      : requestedDates
+
+    let checkDates: Date[] = []
+
+    if (dates.start && dates.end) {
+      // Date range - check all days
+      const start = new Date(dates.start)
+      const end = new Date(dates.end)
+      const current = new Date(start)
+
+      while (current <= end) {
+        checkDates.push(new Date(current))
+        current.setDate(current.getDate() + 1)
+      }
+    } else if (dates.date) {
+      // Single date
+      checkDates.push(new Date(dates.date))
+    } else {
+      return false
+    }
+
+    // Check if guide is available for all requested dates
+    return checkDates.every(date => {
+      const dayOfWeek = date.getDay()
+      return student.availability.some((avail: any) => avail.dayOfWeek === dayOfWeek)
+    })
+  } catch (error) {
+    console.error('Error checking availability:', error)
     return false
   }
-
-  // Check if guide is available for all requested dates
-  return checkDates.every(date => {
-    const dayOfWeek = date.getDay()
-    return student.availability.some((avail: any) => avail.dayOfWeek === dayOfWeek)
-  })
 }
 
 /**

@@ -1,4 +1,10 @@
+import 'server-only'
 import nodemailer from 'nodemailer'
+
+// Helper function to get base URL with fallback
+function getBaseUrl(): string {
+  return process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
+}
 
 // Mock mode - set to true to bypass actual email sending
 const MOCK_EMAIL_MODE = process.env.MOCK_EMAIL === 'true' || true
@@ -11,7 +17,7 @@ const transporter = MOCK_EMAIL_MODE
       secure: false,
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        pass: process.env.EMAIL_PASS,
       },
     })
 
@@ -251,7 +257,7 @@ export async function sendStudentRequestNotification(
       })
     : null
 
-  const acceptUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/student/requests/${touristRequest.id}/accept`
+  const acceptUrl = `${getBaseUrl()}/student/requests/${touristRequest.id}/accept`
 
   const html = `
     <!DOCTYPE html>
@@ -376,7 +382,7 @@ export async function sendStudentRequestNotification(
           <div style="text-align: center; margin: 30px 0;">
             <a href="${acceptUrl}" class="cta-button">Accept This Request</a>
             <br>
-            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/student/dashboard" class="cta-button decline-button">View in Dashboard</a>
+            <a href="${getBaseUrl()}/student/dashboard" class="cta-button decline-button">View in Dashboard</a>
           </div>
 
           <h3>Important Reminders:</h3>

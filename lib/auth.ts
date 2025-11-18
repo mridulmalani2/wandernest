@@ -1,3 +1,4 @@
+import 'server-only'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -25,9 +26,4 @@ export async function hashPassword(password: string): Promise<string> {
 // Verify password
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   return bcrypt.compare(password, hash)
-}
-
-// Generate 6-digit verification code
-export function generateVerificationCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString()
 }

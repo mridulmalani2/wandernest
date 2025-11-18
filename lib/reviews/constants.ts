@@ -23,10 +23,10 @@ export const REVIEW_ATTRIBUTES = [
   'poor_communication',
   'rushed',
   'limited_knowledge',
-] as const;
+] as const
 
-export type ReviewAttribute = typeof REVIEW_ATTRIBUTES[number];
+export type ReviewAttribute = typeof REVIEW_ATTRIBUTES[number]
 
 export function isValidAttribute(attribute: string): boolean {
-  return REVIEW_ATTRIBUTES.includes(attribute as ReviewAttribute);
+  return REVIEW_ATTRIBUTES.includes(attribute as ReviewAttribute)
 }
