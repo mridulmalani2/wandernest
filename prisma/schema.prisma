@@ -35,18 +35,18 @@ enum RequestStatus {
 model Student {
   id                String   @id @default(cuid())
   email             String   @unique
-  googleId          String   @unique
+  googleId          String?  @unique
   name              String
-  gender            String   // male, female, prefer_not_to_say
-  nationality       String
-  institute         String
+  gender            String?  // male, female, prefer_not_to_say
+  nationality       String?
+  institute         String?
   idCardUrl         String?
-  coverLetter       String   @db.Text
-  languages         String[] // Array of language codes
-  interests         String[] // Array of interest tags
+  coverLetter       String?  @db.Text
+  languages         String[] @default([]) // Array of language codes
+  interests         String[] @default([]) // Array of interest tags
   bio               String?  @db.Text
   status            StudentStatus @default(PENDING_APPROVAL)
-  city              String
+  city              String?
   priceRange        Json?    // {min: number, max: number}
 
   // Metrics
@@ -55,6 +55,10 @@ model Student {
   noShowCount       Int      @default(0)
   acceptanceRate    Float?
   reliabilityBadge  String?  // bronze, silver, gold
+
+  // NextAuth relations
+  accounts          Account[]
+  sessions          Session[]
 
   availability      StudentAvailability[]
   requestSelections RequestSelection[]
@@ -171,4 +175,43 @@ model Report {
 
   @@index([studentId])
   @@index([status])
+}
+
+// ============================================
+// NEXTAUTH MODELS
+// ============================================
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user Student @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         Student  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
