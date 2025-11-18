@@ -13,8 +13,33 @@ export default function MainLanding() {
               WanderNest
             </h1>
           </div>
-          <p className="text-2xl md:text-3xl text-gray-700 font-medium">
-            Discover cities with students from your home country.
+          <nav className="flex items-center space-x-4">
+            <Link href="/student">
+              <Button variant="outline">I&apos;m a Student</Button>
+            </Link>
+            <Link href="/booking">
+              <Button>Book a Guide</Button>
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="flex-1 container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="text-5xl md:text-6xl font-bold leading-tight">
+            Experience{' '}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Authentic Travel
+            </span>
+            <br />
+            with Local Student Guides
+          </h2>
+
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Connect with verified university students who will show you their city
+            through a local's eyes. Get personalized recommendations and authentic
+            experiences.
           </p>
         </div>
 
