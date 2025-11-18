@@ -87,7 +87,7 @@ export default function MainLanding() {
         <p className="text-sm text-gray-500 pt-8">
           © {new Date().getFullYear()} WanderNest. Connecting cultures, one guide at a time.
         </p>
-      </div>
+      </main>
     </div>
   )
 }
