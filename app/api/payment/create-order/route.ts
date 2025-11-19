@@ -5,14 +5,30 @@ import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 import { prisma } from '@/lib/prisma';
 
+// Validate Razorpay credentials
+if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+  console.error('RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET environment variables are required');
+}
+
 // Initialize Razorpay instance
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || '',
-  key_secret: process.env.RAZORPAY_KEY_SECRET || '',
-});
+const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+  ? new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
+  : null;
 
 export async function POST(req: NextRequest) {
   try {
+    // Validate Razorpay is configured
+    if (!razorpay) {
+      console.error('Razorpay not initialized due to missing credentials');
+      return NextResponse.json(
+        { error: 'Payment service unavailable. Please contact support.' },
+        { status: 500 }
+      );
+    }
+
     const body = await req.json();
     const { email, phone, touristId, requestId } = body;
 
