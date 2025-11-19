@@ -22,8 +22,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Verify signature
-    const secret = process.env.RAZORPAY_KEY_SECRET || '';
+    // Verify signature - validate secret is configured
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+    if (!secret) {
+      console.error('RAZORPAY_KEY_SECRET environment variable is not configured');
+      return NextResponse.json(
+        { error: 'Payment verification unavailable. Please contact support.' },
+        { status: 500 }
+      );
+    }
     const generatedSignature = crypto
       .createHmac('sha256', secret)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)

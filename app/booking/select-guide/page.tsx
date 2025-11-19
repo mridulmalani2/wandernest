@@ -97,10 +97,23 @@ function SelectGuideContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-gray-600">Finding the best guides for you...</p>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center glass-card rounded-3xl p-8 shadow-premium animate-fade-in">
+            <Loader2 className="h-12 w-12 animate-spin text-blue-600 mx-auto mb-4" />
+            <p className="text-gray-700 font-medium">Finding the best guides for you...</p>
+          </div>
         </div>
       </div>
     )
@@ -108,54 +121,90 @@ function SelectGuideContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Alert variant="destructive" className="max-w-md">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+          <Alert variant="destructive" className="max-w-md glass-card shadow-premium">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        </div>
       </div>
     )
   }
 
   if (matches.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="max-w-md text-center">
-          <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            No Guides Available
-          </h2>
-          <p className="text-gray-600 mb-6">
-            We couldn't find any available guides matching your criteria at the moment.
-            This could be due to limited availability in your selected city or dates.
-          </p>
-          <Button onClick={() => router.push('/booking')} variant="outline">
-            Modify Your Request
-          </Button>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+          <div className="max-w-md text-center glass-card rounded-3xl p-8 shadow-premium animate-fade-in">
+            <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              No Guides Available
+            </h2>
+            <p className="text-gray-700 mb-6">
+              We couldn't find any available guides matching your criteria at the moment.
+              This could be due to limited availability in your selected city or dates.
+            </p>
+            <Button onClick={() => router.push('/booking')} variant="outline" className="hover-lift shadow-soft">
+              Modify Your Request
+            </Button>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-4">
-      {/* Background Effects */}
-      <div className="absolute inset-0 gradient-mesh-vibrant opacity-30" />
-      <div className="absolute inset-0 bg-dots opacity-10" />
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Students working together and networking"
+      >
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+      </div>
+      <div className="absolute inset-0 pattern-dots opacity-10" />
 
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto py-12 px-4">
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in-down">
-          <h1 className="text-4xl md:text-5xl font-bold text-gradient-vibrant mb-4">
+        <div className="text-center mb-8 animate-fade-in-up">
+          <h1 className="text-4xl md:text-5xl font-bold text-white text-shadow-lg mb-4">
             Choose Your Student Guide
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 mb-6 font-medium">
+          <p className="text-lg md:text-xl text-white text-shadow mb-6 font-medium">
             We've found {matches.length} guide{matches.length > 1 ? 's' : ''} that match
             your preferences
           </p>
 
           {/* Important Note */}
-          <Alert className="max-w-3xl mx-auto mb-6 border-2 border-blue-300/60 glass-card shadow-premium hover-lift animate-fade-in-up delay-200">
+          <Alert className="max-w-3xl mx-auto mb-6 border-2 border-blue-300 glass-frosted shadow-premium hover-lift animate-fade-in-up delay-100">
             <Info className="h-5 w-5 text-blue-600" />
             <AlertDescription className="text-sm text-blue-900 font-medium">
               <strong>How it works:</strong> Select one or more guides you're comfortable
@@ -168,11 +217,11 @@ function SelectGuideContent() {
 
         {/* Suggested Price Range */}
         {suggestedPrice && (
-          <div className="max-w-3xl mx-auto mb-8 p-6 glass-card rounded-2xl border-2 border-white/40 shadow-premium hover-lift animate-fade-in-up delay-300">
+          <div className="max-w-3xl mx-auto mb-8 p-6 glass-card rounded-2xl border-2 border-white/40 shadow-premium hover-lift animate-fade-in-up delay-200">
             <h3 className="font-bold text-gray-900 mb-2 text-lg">
               Suggested Price Range
             </h3>
-            <p className="text-3xl font-bold text-gradient-vibrant mb-2">
+            <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
               {suggestedPrice.min}-{suggestedPrice.max} {suggestedPrice.currency}
               {suggestedPrice.type === 'hourly' && (
                 <span className="text-sm font-normal text-gray-600">/hour</span>
@@ -187,7 +236,7 @@ function SelectGuideContent() {
         )}
 
         {/* Student Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 animate-fade-in-up delay-300">
           {matches.map((student) => (
             <StudentProfileCard
               key={student.studentId}

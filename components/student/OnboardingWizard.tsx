@@ -141,7 +141,7 @@ export function OnboardingWizard({ session }: OnboardingWizardProps) {
     // Step 4: Availability
     availability: [],
     unavailabilityExceptions: [],
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timezone: 'Europe/Paris', // Default to first available option to match dropdown
     preferredDurations: [],
 
     // Step 5: Service Preferences
@@ -303,47 +303,101 @@ export function OnboardingWizard({ session }: OnboardingWizardProps) {
     setIsSubmitting(true);
 
     try {
-      // First, upload the ID card if there's a file
-      let idCardUrl = formData.idCardPreview;
+      // Upload all files
+      const filesToUpload = [
+        { file: formData.studentIdFile, type: 'student_id', preview: formData.studentIdPreview },
+        { file: formData.governmentIdFile, type: 'government_id', preview: formData.governmentIdPreview },
+        { file: formData.selfieFile, type: 'selfie', preview: formData.selfiePreview },
+        { file: formData.profilePhotoFile, type: 'profile_photo', preview: formData.profilePhotoPreview },
+      ];
 
-      if (formData.idCardFile) {
-        const uploadFormData = new FormData();
-        uploadFormData.append('file', formData.idCardFile);
-        uploadFormData.append('type', 'student_id');
+      const uploadedUrls: Record<string, string> = {};
 
-        const uploadResponse = await fetch('/api/student/upload', {
-          method: 'POST',
-          body: uploadFormData,
-        });
+      for (const { file, type, preview } of filesToUpload) {
+        if (file) {
+          const uploadFormData = new FormData();
+          uploadFormData.append('file', file);
+          uploadFormData.append('type', type);
 
-        if (!uploadResponse.ok) {
-          throw new Error('Failed to upload student ID');
+          const uploadResponse = await fetch('/api/student/upload', {
+            method: 'POST',
+            body: uploadFormData,
+          });
+
+          if (!uploadResponse.ok) {
+            throw new Error(`Failed to upload ${type.replace('_', ' ')}`);
+          }
+
+          const uploadData = await uploadResponse.json();
+          uploadedUrls[type] = uploadData.url;
+        } else if (preview) {
+          uploadedUrls[type] = preview;
         }
-
-        const uploadData = await uploadResponse.json();
-        idCardUrl = uploadData.url;
       }
 
-      // Submit onboarding data
+      // Submit onboarding data with all fields
       const response = await fetch('/api/student/onboarding', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          // Authentication
           email: session.user.email,
           googleId: session.user.id,
+
+          // Personal Details
           name: formData.name,
+          dateOfBirth: formData.dateOfBirth,
           gender: formData.gender,
           nationality: formData.nationality,
-          institute: formData.institute,
+          phoneNumber: formData.phoneNumber,
           city: formData.city,
-          idCardUrl: idCardUrl,
-          coverLetter: formData.coverLetter,
+          campus: formData.campus,
+
+          // Academic Details
+          institute: formData.institute,
+          programDegree: formData.programDegree,
+          yearOfStudy: formData.yearOfStudy,
+          expectedGraduation: formData.expectedGraduation,
           languages: formData.languages,
-          interests: formData.interests,
+
+          // Identity Verification
+          studentIdUrl: uploadedUrls['student_id'],
+          studentIdExpiry: formData.studentIdExpiry,
+          governmentIdUrl: uploadedUrls['government_id'],
+          governmentIdExpiry: formData.governmentIdExpiry,
+          selfieUrl: uploadedUrls['selfie'],
+          profilePhotoUrl: uploadedUrls['profile_photo'],
+          documentsOwnedConfirmation: formData.documentsOwnedConfirmation,
+          verificationConsent: formData.verificationConsent,
+
+          // Profile Information
           bio: formData.bio,
+          skills: formData.skills,
+          preferredGuideStyle: formData.preferredGuideStyle,
+          coverLetter: formData.coverLetter,
+          interests: formData.interests,
+
+          // Availability
           availability: formData.availability,
+          unavailabilityExceptions: formData.unavailabilityExceptions.length > 0
+            ? formData.unavailabilityExceptions
+            : undefined,
+          timezone: formData.timezone,
+          preferredDurations: formData.preferredDurations,
+
+          // Service Preferences
+          servicesOffered: formData.servicesOffered,
+          hourlyRate: parseFloat(formData.hourlyRate),
+          onlineServicesAvailable: formData.onlineServicesAvailable,
+
+          // Safety & Compliance
+          termsAccepted: formData.termsAccepted,
+          safetyGuidelinesAccepted: formData.safetyGuidelinesAccepted,
+          independentGuideAcknowledged: formData.independentGuideAcknowledged,
+          emergencyContactName: formData.emergencyContactName || undefined,
+          emergencyContactPhone: formData.emergencyContactPhone || undefined,
         }),
       });
 

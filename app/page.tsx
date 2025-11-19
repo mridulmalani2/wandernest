@@ -3,35 +3,11 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Navigation from '@/components/Navigation'
 import { Plane, GraduationCap } from 'lucide-react'
-
-export const metadata = {
-  title: 'WanderNest - Connect with Local Student Guides for Authentic Travel',
-  description: 'Experience authentic travel with verified local student guides. Discover hidden gems, get personalized recommendations, and explore cities like a local.',
-}
+import { getWebsiteStructuredData, getOrganizationStructuredData } from '@/lib/structuredData'
 
 export default function MainLanding() {
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'WanderNest',
-    url: 'https://wandernest.vercel.app',
-    description: 'Marketplace connecting tourists with local student guides for authentic travel experiences',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://wandernest.vercel.app/booking?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
-  }
-
-  const organizationData = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'WanderNest',
-    url: 'https://wandernest.vercel.app',
-    logo: 'https://wandernest.vercel.app/logo.png',
-    description: 'Marketplace platform connecting tourists with verified local student guides',
-    sameAs: [],
-  }
+  const structuredData = getWebsiteStructuredData()
+  const organizationData = getOrganizationStructuredData()
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">

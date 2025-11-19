@@ -1,8 +1,13 @@
 import 'server-only'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+// Validate JWT_SECRET is set
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required but not set');
+}
+
+const JWT_SECRET = process.env.JWT_SECRET
 
 // Generate JWT token
 export function generateToken(payload: object, expiresIn: string = '1h'): string {
@@ -20,10 +25,10 @@ export function verifyToken(token: string): any {
 
 // Hash password
 export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10)
+  return bcryptjs.hash(password, 10)
 }
 
 // Verify password
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  return bcrypt.compare(password, hash)
+  return bcryptjs.compare(password, hash)
 }

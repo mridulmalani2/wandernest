@@ -11,6 +11,25 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 
+  // Production optimizations
+  swcMinify: true, // Enable SWC-based minification (default in Next.js 14, but explicit is better)
+
+  // Compiler optimizations for production
+  compiler: {
+    // Remove console logs in production
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+
+  // Production-specific settings
+  productionBrowserSourceMaps: false, // Disable source maps in production for smaller bundles
+
+  // Optimize JavaScript bundles
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-select'],
+  },
+
   // Enable image optimization with external domains
   images: {
     unoptimized: false,
@@ -39,36 +58,38 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
 
-  // Configure headers for security and performance
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 'https://wandernest.vercel.app'
-          },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,DELETE,PATCH,POST,PUT,OPTIONS' },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version'
-          },
-        ],
-      },
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-DNS-Prefetch-Control', value: 'on' },
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-        ],
-      },
-    ]
+  // Compiler optimizations for modern browsers
+  compiler: {
+    // Remove console logs in production
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
   },
+
+  // Experimental features for better optimization
+  experimental: {
+    // Optimize package imports to reduce bundle size
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-select',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-checkbox',
+      '@radix-ui/react-label',
+      '@radix-ui/react-radio-group',
+      '@radix-ui/react-slider',
+      'date-fns',
+    ],
+  },
+
+  // Webpack configuration for modern output
+  webpack: (config, { isServer }) => {
+    // Target modern browsers with ES2020+ features
+    config.target = isServer ? 'node16' : ['web', 'es2020'];
+
+    return config;
+  },
+
+  // Headers are now configured in vercel.json for better Vercel integration
 }
 
 module.exports = withBundleAnalyzer(nextConfig)

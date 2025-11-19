@@ -176,7 +176,7 @@ export function BookingForm() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6">
+    <div className="relative w-full max-w-4xl mx-auto p-6">
       {/* Step Indicator */}
       <div className="mb-8">
         {/* Mobile Progress - Dots */}
@@ -210,10 +210,10 @@ export function BookingForm() {
             <div key={step.id} className="flex items-center flex-1">
               <div className="flex flex-col items-center flex-1">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-soft ${
                     currentStep >= step.id
-                      ? 'bg-blue-600 border-blue-600 text-white shadow-lg scale-110'
-                      : 'bg-white border-gray-300 text-gray-500'
+                      ? 'gradient-ocean border-blue-600 text-white shadow-premium scale-110'
+                      : 'glass-frosted border-gray-300 text-gray-700'
                   }`}
                 >
                   {currentStep > step.id ? '✓' : step.id}
@@ -221,12 +221,12 @@ export function BookingForm() {
                 <div className="mt-2 text-center">
                   <p
                     className={`text-sm font-medium ${
-                      currentStep >= step.id ? 'text-blue-600' : 'text-gray-500'
+                      currentStep >= step.id ? 'text-blue-700' : 'text-gray-700'
                     }`}
                   >
                     {step.name}
                   </p>
-                  <p className="text-xs text-gray-400">{step.description}</p>
+                  <p className="text-xs text-gray-600">{step.description}</p>
                 </div>
               </div>
               {index < STEPS.length - 1 && (
@@ -242,16 +242,7 @@ export function BookingForm() {
       </div>
 
       {/* Form Steps */}
-      <div className="relative overflow-hidden rounded-lg shadow-lg p-8">
-        <div className="absolute inset-0 opacity-10">
-          <Image
-            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80"
-            alt="Travel planning background"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-white/85 backdrop-blur-sm" />
+      <div className="relative glass-card rounded-3xl border-2 border-white/40 shadow-premium p-8 hover-lift">
         <div className="relative z-10">
         {currentStep === 1 && (
           <TripDetailsStep
@@ -284,6 +275,7 @@ export function BookingForm() {
             variant="outline"
             onClick={handleBack}
             disabled={currentStep === 1 || isSubmitting}
+            className="hover-lift shadow-soft"
           >
             Back
           </Button>
@@ -292,6 +284,7 @@ export function BookingForm() {
             type="button"
             onClick={handleNext}
             disabled={isSubmitting}
+            className="gradient-ocean hover:shadow-glow-blue shadow-premium hover-lift"
           >
             {currentStep === 3 ? (
               isSubmitting ? 'Creating Booking...' : 'Create Booking'

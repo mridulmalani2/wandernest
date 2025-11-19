@@ -1,13 +1,18 @@
 import 'server-only'
 import nodemailer from 'nodemailer'
 
-// Helper function to get base URL with fallback
+// Helper function to get base URL - requires environment variable
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL;
+  if (!baseUrl) {
+    throw new Error('NEXT_PUBLIC_BASE_URL or NEXTAUTH_URL environment variable is required');
+  }
+  return baseUrl;
 }
 
-// Mock mode - only when explicitly enabled or when email config is missing
-const MOCK_EMAIL_MODE = process.env.MOCK_EMAIL === 'true' || !process.env.EMAIL_HOST
+// Mock mode - only enabled in development OR when email is not configured
+// In production, emails will be sent if EMAIL_HOST is configured
+const MOCK_EMAIL_MODE = process.env.NODE_ENV !== 'production' || !process.env.EMAIL_HOST
 
 const transporter = MOCK_EMAIL_MODE
   ? null
