@@ -16,14 +16,16 @@ export default function BookingPage() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Image with Overlays */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Travelers planning their adventure together"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Travelers planning their adventure together">
+        <Image
+          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80"
+          alt="Travelers planning their adventure together"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}

@@ -45,14 +45,16 @@ export default function MainLanding() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
       />
       {/* Full-bleed Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Beautiful Paris cityscape with Eiffel Tower"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Beautiful Paris cityscape with Eiffel Tower">
+        <Image
+          src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80"
+          alt="Beautiful Paris cityscape with Eiffel Tower"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}
@@ -100,6 +102,8 @@ export default function MainLanding() {
                       src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&q=80"
                       alt="Beautiful London cityscape with iconic architecture"
                       fill
+                      quality={75}
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
                     />
                   </div>
@@ -138,6 +142,8 @@ export default function MainLanding() {
                       src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
                       alt="University students collaborating and learning together"
                       fill
+                      quality={75}
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
                     />
                   </div>
@@ -202,6 +208,8 @@ export default function MainLanding() {
                     src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
                     alt="Local cafe experience with authentic ambiance"
                     fill
+                    quality={80}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -215,6 +223,8 @@ export default function MainLanding() {
                     src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
                     alt="Young university students collaborating and sharing knowledge"
                     fill
+                    quality={80}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -272,6 +282,8 @@ export default function MainLanding() {
                     src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80"
                     alt="Group of young travelers exploring a European city together"
                     fill
+                    quality={80}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

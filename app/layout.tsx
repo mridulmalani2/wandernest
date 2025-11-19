@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import Image from 'next/image'
 import './globals.css'
 import { Providers } from './providers'
 
@@ -82,15 +83,16 @@ export default function RootLayout({
         <Providers>
           <div className="min-h-screen relative">
             {/* Subtle world map background image with parallax */}
-            <div
-              className="fixed inset-0 z-0 opacity-[0.04] parallax-bg"
-              style={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1920&q=80)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-              }}
-            />
+            <div className="fixed inset-0 z-0 opacity-[0.04] parallax-bg">
+              <Image
+                src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=1920&q=80"
+                alt="World map background"
+                fill
+                quality={60}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
             {/* Gradient overlay with new color scheme */}
             <div className="fixed inset-0 z-0 bg-gradient-to-br from-cyan-50/95 via-purple-50/90 to-orange-50/95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 backdrop-blur-[2px]" />
             <div className="relative z-10">

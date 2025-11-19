@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 // import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
 // AUTH DISABLED FOR DEVELOPMENT - DATABASE_URL not configured
@@ -98,12 +99,15 @@ export default function TouristDashboard() {
     return (
       <div className="min-h-screen flex flex-col relative overflow-hidden">
         {/* Background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80)',
-          }}
-        >
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80"
+            alt="Group of travelers"
+            fill
+            quality={85}
+            sizes="100vw"
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-indigo-600/10 to-purple-600/15" />
         </div>
@@ -135,14 +139,16 @@ export default function TouristDashboard() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Image with Overlays */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Group of travelers exploring together"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Group of travelers exploring together">
+        <Image
+          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80"
+          alt="Group of travelers exploring together"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}

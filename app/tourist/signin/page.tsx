@@ -3,6 +3,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -38,14 +39,16 @@ export default function TouristSignIn() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Image with Overlays */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Beautiful London cityscape with Big Ben"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Beautiful London cityscape with Big Ben">
+        <Image
+          src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1920&q=80"
+          alt="Beautiful London cityscape with Big Ben"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}

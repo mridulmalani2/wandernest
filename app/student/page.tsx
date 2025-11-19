@@ -8,14 +8,16 @@ export default function StudentLandingPage() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Full-bleed Background with Paris imagery */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Beautiful Paris street scene with classic architecture"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Beautiful Paris street scene with classic architecture">
+        <Image
+          src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80"
+          alt="Beautiful Paris street scene with classic architecture"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}
@@ -65,6 +67,8 @@ export default function StudentLandingPage() {
                   src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80"
                   alt="Arc de Triomphe and Paris landmarks"
                   fill
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                   className="object-cover"
                 />
               </div>
@@ -162,6 +166,8 @@ export default function StudentLandingPage() {
                       src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80"
                       alt="Student studying"
                       fill
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, 600px"
                       className="object-cover"
                     />
                   </div>
@@ -184,6 +190,8 @@ export default function StudentLandingPage() {
                       src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80"
                       alt="Students collaborating"
                       fill
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, 600px"
                       className="object-cover"
                     />
                   </div>
@@ -206,6 +214,8 @@ export default function StudentLandingPage() {
                       src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80"
                       alt="Student with books"
                       fill
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, 600px"
                       className="object-cover"
                     />
                   </div>
@@ -228,6 +238,8 @@ export default function StudentLandingPage() {
                       src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=600&q=80"
                       alt="Money and payment"
                       fill
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, 600px"
                       className="object-cover"
                     />
                   </div>
@@ -253,6 +265,8 @@ export default function StudentLandingPage() {
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
                   alt="Students working together and networking"
                   fill
+                  quality={80}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-8">
@@ -269,6 +283,8 @@ export default function StudentLandingPage() {
                   src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80"
                   alt="Students celebrating success and achievement"
                   fill
+                  quality={80}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-8">

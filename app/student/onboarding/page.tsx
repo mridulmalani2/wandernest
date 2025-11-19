@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { OnboardingWizard } from '@/components/student/OnboardingWizard';
 
 export default function StudentOnboarding() {
@@ -74,12 +75,15 @@ export default function StudentOnboarding() {
     return (
       <div className="min-h-screen flex flex-col relative overflow-hidden">
         {/* Background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1920&q=80)',
-          }}
-        >
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1920&q=80"
+            alt="Students celebrating success"
+            fill
+            quality={85}
+            sizes="100vw"
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/15 via-blue-600/10 to-pink-600/15" />
         </div>

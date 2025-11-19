@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
 export default function SuccessPage({
@@ -11,14 +12,16 @@ export default function SuccessPage({
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Image with Overlays */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Beautiful celebration scene with confetti"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Beautiful celebration scene with confetti">
+        <Image
+          src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=1920&q=80"
+          alt="Beautiful celebration scene with confetti"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}

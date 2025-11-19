@@ -44,14 +44,16 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Image with Overlays */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&q=80)',
-        }}
-        role="img"
-        aria-label="Professional office workspace and analytics"
-      >
+      <div className="absolute inset-0" role="img" aria-label="Professional office workspace and analytics">
+        <Image
+          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&q=80"
+          alt="Professional office workspace and analytics"
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* Dark overlay for text contrast */}
         <div className="absolute inset-0 bg-black/30 backdrop-blur-[4px]" />
         {/* Gradient overlay for visual depth */}
