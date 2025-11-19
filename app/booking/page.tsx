@@ -103,7 +103,7 @@ export default function BookingPage() {
         )} */}
 
           {/* DEV MODE: Direct access to booking form */}
-          <div className="animate-fade-in-up delay-200">
+          <div className="relative animate-fade-in-up delay-200">
             <BookingForm />
           </div>
         </main>

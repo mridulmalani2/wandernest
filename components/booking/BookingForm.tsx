@@ -176,7 +176,7 @@ export function BookingForm() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6">
+    <div className="relative w-full max-w-4xl mx-auto p-6">
       {/* Step Indicator */}
       <div className="mb-8">
         {/* Mobile Progress - Dots */}
@@ -242,7 +242,7 @@ export function BookingForm() {
       </div>
 
       {/* Form Steps */}
-      <div className="glass-card rounded-3xl border-2 border-white/40 shadow-premium p-8 hover-lift">
+      <div className="relative glass-card rounded-3xl border-2 border-white/40 shadow-premium p-8 hover-lift">
         <div className="relative z-10">
         {currentStep === 1 && (
           <TripDetailsStep
