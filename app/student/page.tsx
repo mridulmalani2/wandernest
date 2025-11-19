@@ -7,18 +7,21 @@ import { DollarSign, Clock, Users, Shield, CheckCircle } from 'lucide-react'
 export default function StudentLandingPage() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background with Paris imagery */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80"
-          alt="Beautiful Paris street scene with classic architecture"
-          fill
-          className="object-cover opacity-50"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50/60 via-pink-50/55 to-blue-50/60" />
+      {/* Full-bleed Background with Paris imagery */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Beautiful Paris street scene with classic architecture"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-pink-600/15 to-blue-600/20" />
       </div>
-      <div className="absolute inset-0 pattern-grid opacity-20" />
+      <div className="absolute inset-0 pattern-grid opacity-15" />
 
       {/* Content */}
       <div className="relative z-10">
@@ -31,16 +34,16 @@ export default function StudentLandingPage() {
 
             {/* Hero */}
             <div className="text-center space-y-8 animate-slide-up-fade">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight text-white text-shadow-lg">
                 Earn More Than{' '}
-                <span className="text-gradient-vibrant animate-gradient-shift inline-block">
+                <span className="text-gradient-vibrant animate-gradient-shift inline-block bg-white/10 px-4 py-2 rounded-2xl">
                   Campus Jobs
                 </span>
                 <br />
                 While Sharing Your City
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-medium text-shadow">
                 Host visitors from your home country in Paris or London and earn more than typical student jobs.
                 Choose your schedule, meet interesting people, and share your local knowledge.
               </p>
@@ -56,8 +59,8 @@ export default function StudentLandingPage() {
             </div>
 
             {/* Value Proposition */}
-            <div className="backdrop-blur-md rounded-3xl shadow-xl border border-gray-200 animate-fade-in-up relative overflow-hidden">
-              <div className="absolute inset-0 opacity-15">
+            <div className="backdrop-blur-md rounded-3xl shadow-xl border-2 border-white/40 animate-fade-in-up relative overflow-hidden">
+              <div className="absolute inset-0 opacity-20">
                 <Image
                   src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80"
                   alt="Arc de Triomphe and Paris landmarks"
@@ -65,7 +68,7 @@ export default function StudentLandingPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute inset-0 bg-white/75 backdrop-blur-sm" />
+              <div className="absolute inset-0 bg-white/85 backdrop-blur-md" />
               <div className="relative z-10 p-8 md:p-12">
                 <h2 className="text-4xl font-bold text-center mb-12">Why Guide with WanderNest?</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -114,7 +117,7 @@ export default function StudentLandingPage() {
 
             {/* How It Works */}
             <div className="space-y-10 animate-fade-in-up delay-500">
-              <h2 className="text-4xl font-bold text-center text-gradient-vibrant">How It Works</h2>
+              <h2 className="text-4xl font-bold text-center text-white text-shadow-lg">How It Works</h2>
               <div className="grid md:grid-cols-4 gap-8">
                 <div className="text-center space-y-4 group hover-lift">
                   <div className="w-20 h-20 gradient-ocean rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-glow-blue group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
@@ -160,7 +163,7 @@ export default function StudentLandingPage() {
 
             {/* Mini FAQ */}
             <div className="glass-card rounded-3xl border-2 border-white/40 p-8 md:p-12 shadow-premium hover:shadow-elevated animate-fade-in-up delay-700">
-              <h2 className="text-4xl font-bold text-center mb-10 text-gradient-vibrant">Common Questions</h2>
+              <h2 className="text-4xl font-bold text-center mb-10 text-white text-shadow-lg">Common Questions</h2>
 
               <div className="space-y-4">
                 <details className="group rounded-xl border-2 border-gray-200 p-5 hover:border-blue-400 hover:shadow-soft transition-all hover-lift relative overflow-hidden">
@@ -291,8 +294,8 @@ export default function StudentLandingPage() {
 
             {/* Final CTA */}
             <div className="text-center space-y-6 py-12 animate-fade-in-up delay-1000">
-              <h2 className="text-4xl md:text-5xl font-bold text-gradient-vibrant">Ready to Start Earning?</h2>
-              <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed font-medium">
+              <h2 className="text-4xl md:text-5xl font-bold text-white text-shadow-lg">Ready to Start Earning?</h2>
+              <p className="text-xl text-white max-w-2xl mx-auto leading-relaxed font-medium text-shadow">
                 Join hundreds of students already earning flexible income by sharing their city with visitors.
               </p>
               <Link href="/student/signin">

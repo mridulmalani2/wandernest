@@ -13,18 +13,21 @@ export default function TouristLanding() {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background with London imagery */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&q=80"
-          alt="Beautiful London Thames River with iconic architecture"
-          fill
-          className="object-cover opacity-50"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-indigo-50/55 to-purple-50/60" />
+      {/* Full-bleed Background with London imagery */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Beautiful London Thames River with iconic architecture"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-indigo-600/15 to-purple-600/20" />
       </div>
-      <div className="absolute inset-0 pattern-dots opacity-20" />
+      <div className="absolute inset-0 pattern-dots opacity-15" />
 
       {/* Content */}
       <div className="relative z-10">
@@ -35,16 +38,16 @@ export default function TouristLanding() {
         <main className="flex-1 container mx-auto px-4 py-16">
           <div className="max-w-5xl mx-auto space-y-12">
             <div className="text-center space-y-8 animate-slide-up-fade">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight text-white text-shadow-lg">
                 Experience{' '}
-                <span className="text-gradient-vibrant animate-gradient-shift inline-block">
+                <span className="text-gradient-vibrant animate-gradient-shift inline-block bg-white/10 px-4 py-2 rounded-2xl">
                   Authentic Travel
                 </span>
                 <br />
                 with Local Student Guides
               </h1>
 
-              <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-medium text-shadow">
                 Connect with verified university students who will show you their city
                 through a local&apos;s eyes. Get personalized recommendations and authentic
                 experiences.
@@ -169,7 +172,7 @@ export default function TouristLanding() {
 
             {/* How It Works Section */}
             <div className="space-y-10 pt-12 animate-fade-in-up delay-500">
-              <h2 className="text-4xl font-bold text-center text-gradient-vibrant">How It Works</h2>
+              <h2 className="text-4xl font-bold text-center text-white text-shadow-lg">How It Works</h2>
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="text-center space-y-4 group hover-lift">
                   <div className="w-20 h-20 gradient-ocean rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-glow-blue group-hover:scale-110 transition-all duration-300">
