@@ -436,6 +436,19 @@
     }
   }
 
+  /* Text shadow utilities for better contrast and readability */
+  .text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  }
+
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     .glass-card {
