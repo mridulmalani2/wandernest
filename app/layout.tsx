@@ -5,20 +5,22 @@ import { Providers } from './providers'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '600', '700'], // Reduced from 5 to 3 weights
+  weight: ['400', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  adjustFontFallback: true,
 })
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '900'], // Reduced from 6 to 4 weights
+  weight: ['400', '600', '700', '900'],
   variable: '--font-playfair',
   display: 'swap',
   preload: true,
   fallback: ['Georgia', 'serif'],
+  adjustFontFallback: true,
 })
 
 export const metadata: Metadata = {
@@ -90,7 +92,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="min-h-screen relative">
-            {/* Gradient overlay with new color scheme - removed background image for faster LCP */}
+            {/* Gradient overlay - background image removed for faster LCP */}
             <div className="fixed inset-0 z-0 bg-gradient-to-br from-cyan-50/95 via-purple-50/90 to-orange-50/95 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
             <div className="relative z-10">
               {children}
