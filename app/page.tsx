@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Navigation from '@/components/Navigation'
-import { Plane, GraduationCap } from 'lucide-react'
+import TouristCTA from '@/components/cta/TouristCTA'
+import StudentCTA from '@/components/cta/StudentCTA'
 import { getWebsiteStructuredData, getOrganizationStructuredData } from '@/lib/structuredData'
 
 export default function MainLanding() {
@@ -67,88 +66,17 @@ export default function MainLanding() {
               </p>
             </div>
 
-            {/* Two Large CTAs */}
+            {/* Two Large CTAs - Redesigned with image-based tiles matching Experience India style */}
             <div className="grid md:grid-cols-2 gap-8 pt-8 max-w-5xl mx-auto">
-              {/* Tourist CTA */}
-              <Link href="/tourist" className="animate-fade-in-up">
-                <div className="group cursor-pointer backdrop-blur-md rounded-3xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-blue-400/80 transition-all duration-500 hover-lift relative overflow-hidden">
-                  {/* Background Image */}
-                  <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500">
-                    <Image
-                      src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&q=80"
-                      alt="Beautiful London cityscape with iconic architecture"
-                      fill
-                      loading="lazy"
-                      quality={75}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/40 via-blue-400/30 to-cyan-500/40" />
-                  <div className="absolute inset-0 bg-white/75 backdrop-blur-md" />
+              {/* Tourist CTA - Routes to /tourist */}
+              <div className="animate-fade-in-up">
+                <TouristCTA />
+              </div>
 
-                  <div className="relative z-10 p-10">
-                    <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <Plane className="w-10 h-10" />
-                    </div>
-
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors">
-                      I&apos;m a Tourist
-                    </h2>
-
-                    <p className="text-gray-700 mb-8 text-lg leading-relaxed font-medium">
-                      Find local student guides to show you authentic experiences in your destination city
-                    </p>
-
-                    <Button size="lg" className="w-full text-lg py-7 gradient-ocean hover:shadow-glow-blue shadow-premium text-white font-semibold group/btn">
-                      Explore as Tourist
-                      <span className="ml-2 group-hover/btn:translate-x-2 transition-transform inline-block">→</span>
-                    </Button>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Student CTA */}
-              {/* Temporarily commented out for MVP - linking to Google Form instead of student page */}
-              {/* <Link href="/student" className="animate-fade-in-up delay-100"> */}
-              <a href="https://forms.gle/fhzBnMAh2eGbGSyt8" target="_blank" rel="noopener noreferrer" className="animate-fade-in-up delay-100">
-                <div className="group cursor-pointer backdrop-blur-md rounded-3xl shadow-xl hover:shadow-2xl border-2 border-white/40 hover:border-purple-400/80 transition-all duration-500 hover-lift relative overflow-hidden">
-                  {/* Background Image */}
-                  <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500">
-                    <Image
-                      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
-                      alt="University students collaborating and learning together"
-                      fill
-                      loading="lazy"
-                      quality={75}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/40 via-purple-400/30 to-pink-500/40" />
-                  <div className="absolute inset-0 bg-white/75 backdrop-blur-md" />
-
-                  <div className="relative z-10 p-10">
-                    <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <GraduationCap className="w-10 h-10" />
-                    </div>
-
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors">
-                      I&apos;m a Student
-                    </h2>
-
-                    <p className="text-gray-700 mb-8 text-lg leading-relaxed font-medium">
-                      Become a guide and earn money by showing travelers around your city
-                    </p>
-
-                    <Button size="lg" className="w-full text-lg py-7 gradient-vibrant hover:shadow-glow-purple shadow-premium text-white font-semibold group/btn">
-                      Start Guiding
-                      <span className="ml-2 group-hover/btn:translate-x-2 transition-transform inline-block">→</span>
-                    </Button>
-                  </div>
-                </div>
-              </a>
-              {/* </Link> */}
+              {/* Student CTA - Temporarily routes to Google Form (see StudentCTA component for details) */}
+              <div className="animate-fade-in-up delay-100">
+                <StudentCTA />
+              </div>
             </div>
 
             {/* Visual Features Section with Images */}
