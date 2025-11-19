@@ -36,45 +36,63 @@ export default function TouristSignIn() {
   // ====== END GOOGLE AUTH ======
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <span className="text-2xl">🌍</span>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              WanderNest
-            </h1>
-          </div>
-          <nav className="flex items-center space-x-4">
-            <Link href="/tourist">
-              <Button variant="ghost">
-                <span className="mr-1">←</span> Back
-              </Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Beautiful London cityscape with Big Ben"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-indigo-600/15 to-purple-600/20" />
+      </div>
+      <div className="absolute inset-0 pattern-grid opacity-15" />
 
-      {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 py-16">
-        <div className="max-w-md w-full space-y-8">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold mb-2">
-              Sign in as{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Tourist
-              </span>
-            </h2>
-            <p className="text-gray-600 mt-2">
-              Sign in to book guides and manage your trips
-            </p>
+      {/* Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header */}
+        <header className="border-b-2 glass-card border-white/40 shadow-premium sticky top-0 z-50 animate-fade-in">
+          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl">🌍</span>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                WanderNest
+              </h1>
+            </div>
+            <nav className="flex items-center space-x-4">
+              <Link href="/tourist">
+                <Button variant="ghost" className="hover-lift shadow-soft">
+                  <span className="mr-1">←</span> Back
+                </Button>
+              </Link>
+            </nav>
           </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 flex items-center justify-center px-4 py-16">
+          <div className="max-w-md w-full space-y-8 animate-fade-in-up">
+            <div className="text-center">
+              <h2 className="text-4xl font-bold mb-2 text-white text-shadow-lg">
+                Sign in as{' '}
+                <span className="text-gradient-vibrant animate-gradient-shift inline-block">
+                  Tourist
+                </span>
+              </h2>
+              <p className="text-white mt-2 text-shadow">
+                Sign in to book guides and manage your trips
+              </p>
+            </div>
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4">
-              <p className="text-sm text-red-800">
+            <div className="glass-card bg-red-50/90 border-2 border-red-300 rounded-2xl p-4 shadow-premium animate-scale-in">
+              <p className="text-sm text-red-800 font-semibold">
                 {error === 'OAuthSignin'
                   ? 'Error occurred while signing in with Google'
                   : error === 'OAuthCallback'
@@ -99,11 +117,11 @@ export default function TouristSignIn() {
           )}
 
           {/* Sign In Card */}
-          <div className="bg-white rounded-xl shadow-lg border p-8 space-y-6">
+          <div className="glass-card rounded-3xl border-2 border-white/40 p-8 shadow-premium space-y-6">
             {/* ====== TEMPORARY DEV BYPASS BUTTON ====== */}
             <Button
               onClick={handleDevBypass}
-              className="w-full flex items-center justify-center space-x-3 py-6 text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+              className="w-full flex items-center justify-center space-x-3 py-6 text-lg gradient-ocean hover:shadow-glow-blue shadow-premium hover-lift"
               disabled={status === 'loading'}
             >
               <span>🚀</span>
@@ -168,7 +186,7 @@ export default function TouristSignIn() {
           </div>
 
           {/* Dev Warning Box */}
-          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-6">
+          <div className="glass-frosted bg-yellow-50/90 border-2 border-yellow-300 rounded-2xl p-6 shadow-soft hover-lift">
             <div className="flex items-start space-x-3">
               <div className="text-2xl">⚠️</div>
               <div>
@@ -181,7 +199,7 @@ export default function TouristSignIn() {
           </div>
 
           {/* Info Box */}
-          <div className="bg-blue-50 border-2 border-blue-400 rounded-xl p-6">
+          <div className="glass-frosted bg-blue-50/90 border-2 border-blue-300 rounded-2xl p-6 shadow-soft hover-lift">
             <div className="flex items-start space-x-3">
               <div className="text-2xl">ℹ️</div>
               <div>
@@ -211,12 +229,13 @@ export default function TouristSignIn() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-white/80 backdrop-blur-sm mt-16">
-        <div className="container mx-auto px-4 py-8 text-center text-gray-600">
-          <p>&copy; {new Date().getFullYear()} WanderNest. All rights reserved.</p>
-        </div>
-      </footer>
+        {/* Footer */}
+        <footer className="border-t-2 glass-card border-white/40 mt-16 animate-fade-in">
+          <div className="container mx-auto px-4 py-8 text-center text-gray-700">
+            <p>&copy; {new Date().getFullYear()} WanderNest. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
     </div>
   )
 }

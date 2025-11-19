@@ -96,10 +96,24 @@ export default function TouristDashboard() {
   // Show loading state while checking authentication
   if (loading && requests.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your bookings...</p>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-indigo-600/10 to-purple-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-grid opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center glass-card rounded-3xl p-8 shadow-premium animate-fade-in">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-700 font-medium">Loading your bookings...</p>
+          </div>
         </div>
       </div>
     )
@@ -119,79 +133,97 @@ export default function TouristDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      {/* Header */}
-      <div className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Tourist Dashboard</h1>
-              <p className="mt-2 text-gray-600">Logged in as {session?.user?.email}</p>
-            </div>
-            <div className="flex gap-4">
-              <a
-                href="/booking"
-                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
-              >
-                New Booking
-              </a>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50"
-              >
-                Logout
-              </button>
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Group of travelers exploring together"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-indigo-600/10 to-purple-600/15" />
+      </div>
+      <div className="absolute inset-0 pattern-grid opacity-10" />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header */}
+        <div className="glass-card border-b-2 border-white/40 shadow-premium animate-fade-in">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Tourist Dashboard</h1>
+                <p className="mt-2 text-gray-700">Logged in as <span className="font-semibold text-blue-700">{session?.user?.email}</span></p>
+              </div>
+              <div className="flex gap-4">
+                <a
+                  href="/booking"
+                  className="px-4 py-2 gradient-ocean text-white rounded-lg hover:shadow-glow-blue shadow-soft transition-all hover-lift"
+                >
+                  New Booking
+                </a>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 text-gray-700 hover:text-gray-900 border-2 border-gray-300 rounded-lg hover:bg-white/50 hover-lift shadow-soft"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up delay-100">
+          <div className="glass-card rounded-2xl shadow-premium p-6 border-2 border-white/40 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Requests</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{stats.total}</p>
+                <p className="text-sm font-medium text-gray-700">Total Requests</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mt-2">{stats.total}</p>
               </div>
-              <div className="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
+              <div className="h-12 w-12 gradient-ocean rounded-full flex items-center justify-center shadow-soft">
                 <span className="text-2xl">📝</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="glass-card rounded-2xl shadow-premium p-6 border-2 border-white/40 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-3xl font-bold text-yellow-600 mt-2">{stats.pending}</p>
+                <p className="text-sm font-medium text-gray-700">Pending</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-600 bg-clip-text text-transparent mt-2">{stats.pending}</p>
               </div>
-              <div className="h-12 w-12 bg-yellow-100 rounded-full flex items-center justify-center">
+              <div className="h-12 w-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-soft">
                 <span className="text-2xl">⏳</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="glass-card rounded-2xl shadow-premium p-6 border-2 border-white/40 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Accepted</p>
-                <p className="text-3xl font-bold text-green-600 mt-2">{stats.accepted}</p>
+                <p className="text-sm font-medium text-gray-700">Accepted</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mt-2">{stats.accepted}</p>
               </div>
-              <div className="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center">
+              <div className="h-12 w-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-soft">
                 <span className="text-2xl">✅</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="glass-card rounded-2xl shadow-premium p-6 border-2 border-white/40 hover-lift">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Reviewed</p>
-                <p className="text-3xl font-bold text-purple-600 mt-2">{stats.completed}</p>
+                <p className="text-sm font-medium text-gray-700">Reviewed</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mt-2">{stats.completed}</p>
               </div>
-              <div className="h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center">
+              <div className="h-12 w-12 gradient-vibrant rounded-full flex items-center justify-center shadow-soft">
                 <span className="text-2xl">⭐</span>
               </div>
             </div>
@@ -199,25 +231,25 @@ export default function TouristDashboard() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-600">{error}</p>
+          <div className="glass-card bg-red-50/90 border-2 border-red-300 rounded-2xl p-4 mb-6 shadow-premium animate-scale-in">
+            <p className="text-red-700 font-semibold">{error}</p>
           </div>
         )}
 
         {requests.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+          <div className="glass-card rounded-3xl shadow-premium p-12 text-center border-2 border-white/40 animate-fade-in hover-lift">
             <div className="text-6xl mb-4">🌍</div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">No requests yet</h3>
-            <p className="text-gray-600 mb-6">Start your adventure by booking a local guide!</p>
+            <p className="text-gray-700 mb-6">Start your adventure by booking a local guide!</p>
             <a
               href="/booking"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+              className="inline-block px-6 py-3 gradient-ocean text-white rounded-lg hover:shadow-glow-blue shadow-soft transition-all hover-lift"
             >
               Book Your First Trip
             </a>
           </div>
         ) : (
-          <div className="grid gap-6">
+          <div className="grid gap-6 animate-fade-in-up delay-200">
             {requests.map((request) => {
               const dates = request.dates as { start: string; end?: string }
               const isAccepted = request.status === 'ACCEPTED'
@@ -226,8 +258,8 @@ export default function TouristDashboard() {
               return (
                 <div
                   key={request.id}
-                  className={`bg-white rounded-lg shadow-lg overflow-hidden border-l-4 ${
-                    isAccepted ? 'border-green-500' : isPending ? 'border-yellow-500' : 'border-gray-300'
+                  className={`glass-card rounded-2xl shadow-premium overflow-hidden border-2 border-white/40 border-l-4 hover-lift animate-fade-in ${
+                    isAccepted ? 'border-l-green-500' : isPending ? 'border-l-yellow-500' : 'border-l-gray-400'
                   }`}
                 >
                   <div className="p-6">
@@ -361,6 +393,7 @@ export default function TouristDashboard() {
             })}
           </div>
         )}
+        </div>
       </div>
     </div>
   )

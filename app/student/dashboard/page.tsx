@@ -230,10 +230,24 @@ export default function StudentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center glass-card rounded-3xl p-8 shadow-premium animate-fade-in">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-700 font-medium">Loading your dashboard...</p>
+          </div>
         </div>
       </div>
     )
@@ -241,68 +255,101 @@ export default function StudentDashboard() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600">Failed to load dashboard data</p>
-          <Button onClick={() => router.push('/student/signin')} className="mt-4">
-            Back to Sign In
-          </Button>
+      <div className="min-h-screen flex flex-col relative overflow-hidden">
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80)',
+          }}
+        >
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        </div>
+        <div className="absolute inset-0 pattern-dots opacity-10" />
+
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center glass-card rounded-3xl p-8 shadow-premium animate-fade-in">
+            <p className="text-red-600 font-semibold mb-4">Failed to load dashboard data</p>
+            <Button onClick={() => router.push('/student/signin')} className="gradient-ocean hover:shadow-glow-blue">
+              Back to Sign In
+            </Button>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Students collaborating and learning together"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+      </div>
+      <div className="absolute inset-0 pattern-dots opacity-10" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Student Dashboard</h1>
-            <p className="mt-2 text-gray-600">
-              Welcome back, <span className="font-semibold">{data.student.name}</span>
-            </p>
-            <p className="text-sm text-gray-500">{data.student.email}</p>
+        <div className="glass-card rounded-3xl shadow-premium p-6 mb-8 border border-white/40 hover-lift animate-fade-in">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Student Dashboard</h1>
+              <p className="mt-2 text-gray-700">
+                Welcome back, <span className="font-semibold text-blue-700">{data.student.name}</span>
+              </p>
+              <p className="text-sm text-gray-600">{data.student.email}</p>
+            </div>
+            <Button onClick={handleLogout} variant="outline" className="hover-lift shadow-soft">
+              Logout
+            </Button>
           </div>
-          <Button onClick={handleLogout} variant="outline">
-            Logout
-          </Button>
         </div>
 
         {/* Error Alert */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-600">{error}</p>
+          <div className="glass-card bg-red-50/90 border-2 border-red-300 rounded-2xl p-4 mb-6 shadow-premium animate-scale-in">
+            <p className="text-red-700 font-semibold">{error}</p>
           </div>
         )}
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up delay-100">
+          <Card className="glass-card border border-white/40 hover-lift shadow-premium">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Bookings</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-700">Total Bookings</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-gray-900">{data.stats.totalBookings}</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">{data.stats.totalBookings}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card border border-white/40 hover-lift shadow-premium">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Pending Requests</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-700">Pending Requests</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-orange-600">{data.stats.pendingRequests}</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">{data.stats.pendingRequests}</div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card border border-white/40 hover-lift shadow-premium">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Average Rating</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-700">Average Rating</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center">
-                <span className="text-3xl font-bold text-gray-900">
+                <span className="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-600 bg-clip-text text-transparent">
                   {data.stats.averageRating.toFixed(1)}
                 </span>
                 <span className="text-yellow-500 text-2xl ml-2">★</span>
@@ -310,12 +357,12 @@ export default function StudentDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card border border-white/40 hover-lift shadow-premium">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Total Earnings</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-700">Total Earnings</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-600">
+              <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 ${data.stats.totalEarnings.toFixed(2)}
               </div>
             </CardContent>
@@ -324,8 +371,8 @@ export default function StudentDashboard() {
 
         {/* Pending Requests Section */}
         {data.pendingRequests.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Pending Requests</h2>
+          <div className="mb-8 animate-fade-in-up delay-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-shadow">Pending Requests</h2>
             <div className="grid gap-6">
               {data.pendingRequests.map((pending) => {
                 const request = pending.request
@@ -333,7 +380,7 @@ export default function StudentDashboard() {
                 const isExpired = !!(request.expiresAt && new Date() > new Date(request.expiresAt))
 
                 return (
-                  <Card key={pending.id} className="bg-white">
+                  <Card key={pending.id} className="glass-card border-2 border-white/40 shadow-premium hover-lift animate-fade-in">
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <div>
@@ -405,7 +452,7 @@ export default function StudentDashboard() {
                         <Button
                           onClick={() => handleAcceptRequest(request.id)}
                           disabled={isProcessing || isExpired}
-                          className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                          className="flex-1 gradient-ocean hover:shadow-glow-blue shadow-soft"
                         >
                           {isProcessing ? 'Processing...' : 'Accept Request'}
                         </Button>
@@ -413,7 +460,7 @@ export default function StudentDashboard() {
                           onClick={() => handleRejectRequest(request.id)}
                           disabled={isProcessing || isExpired}
                           variant="outline"
-                          className="flex-1"
+                          className="flex-1 hover-lift shadow-soft"
                         >
                           {isProcessing ? 'Processing...' : 'Reject'}
                         </Button>
@@ -428,14 +475,14 @@ export default function StudentDashboard() {
 
         {/* Accepted Bookings Section */}
         {data.acceptedBookings.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Accepted Bookings</h2>
+          <div className="mb-8 animate-fade-in-up delay-300">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-shadow">Accepted Bookings</h2>
             <div className="grid gap-6">
               {data.acceptedBookings.map((booking) => {
                 const request = booking.request
 
                 return (
-                  <Card key={booking.id} className="bg-white border-l-4 border-l-green-500">
+                  <Card key={booking.id} className="glass-card border-2 border-white/40 border-l-4 border-l-green-500 shadow-premium hover-lift animate-fade-in">
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <div>
@@ -503,11 +550,11 @@ export default function StudentDashboard() {
 
         {/* Reviews Section */}
         {data.reviews.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Reviews</h2>
+          <div className="mb-8 animate-fade-in-up delay-400">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-shadow">Your Reviews</h2>
             <div className="grid gap-6">
               {data.reviews.map((review) => (
-                <Card key={review.id} className="bg-white">
+                <Card key={review.id} className="glass-card border-2 border-white/40 shadow-premium hover-lift animate-fade-in">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -552,7 +599,7 @@ export default function StudentDashboard() {
         {data.pendingRequests.length === 0 &&
          data.acceptedBookings.length === 0 &&
          data.reviews.length === 0 && (
-          <Card className="bg-white">
+          <Card className="glass-card border-2 border-white/40 shadow-premium animate-fade-in">
             <CardContent className="p-12 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
