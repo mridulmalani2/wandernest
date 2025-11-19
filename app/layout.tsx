@@ -2,19 +2,23 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'], // Reduced from 5 to 3 weights
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
 })
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '600', '700', '900'], // Reduced from 6 to 4 weights
   variable: '--font-playfair',
   display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -66,9 +70,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 }
 
 export default function RootLayout({
@@ -98,6 +99,8 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

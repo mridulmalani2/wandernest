@@ -5,8 +5,7 @@ const globalForRedis = globalThis as unknown as {
   redis: Redis | null | undefined
 }
 
-// Lazy initialization - only create connection when actually used
-// This prevents Redis from connecting during build time
+// Optimized Redis client - auto-connects, no manual connect() calls needed
 function getRedisClient(): Redis | null {
   // Skip Redis if no URL is configured
   if (!process.env.REDIS_URL) {
@@ -24,16 +23,15 @@ function getRedisClient(): Redis | null {
           }
           return Math.min(times * 100, 3000)
         },
-        lazyConnect: true,
+        lazyConnect: false, // Auto-connect instead of manual connect() calls
       })
 
       client.on('error', (err) => {
         console.error('Redis connection error:', err.message)
       })
 
-      if (process.env.NODE_ENV !== 'production') {
-        globalForRedis.redis = client
-      }
+      // Store client globally in all environments for connection reuse
+      globalForRedis.redis = client
 
       return client
     } catch (error) {
@@ -60,7 +58,6 @@ export async function storeVerificationCode(
   }
 
   try {
-    await redis.connect()
     const key = `verification:${email}`
     await redis.setex(key, ttl, JSON.stringify({ code, attempts: 0 }))
   } catch (error) {
@@ -78,7 +75,6 @@ export async function getVerificationData(
   }
 
   try {
-    await redis.connect()
     const key = `verification:${email}`
     const data = await redis.get(key)
     return data ? JSON.parse(data) : null
@@ -96,7 +92,6 @@ export async function incrementVerificationAttempts(
   if (!redis) return 0
 
   try {
-    await redis.connect()
     const key = `verification:${email}`
     const data = await getVerificationData(email)
 
@@ -124,7 +119,6 @@ export async function deleteVerificationCode(email: string): Promise<void> {
   if (!redis) return
 
   try {
-    await redis.connect()
     const key = `verification:${email}`
     await redis.del(key)
   } catch (error) {
