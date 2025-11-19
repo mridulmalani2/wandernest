@@ -111,9 +111,9 @@ export default function MainLanding() {
                       <Plane className="w-10 h-10" />
                     </div>
 
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors">
                       I&apos;m a Tourist
-                    </h3>
+                    </h2>
 
                     <p className="text-gray-700 mb-8 text-lg leading-relaxed font-medium">
                       Find local student guides to show you authentic experiences in your destination city
@@ -149,9 +149,9 @@ export default function MainLanding() {
                       <GraduationCap className="w-10 h-10" />
                     </div>
 
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors">
                       I&apos;m a Student
-                    </h3>
+                    </h2>
 
                     <p className="text-gray-700 mb-8 text-lg leading-relaxed font-medium">
                       Become a guide and earn money by showing travelers around your city
