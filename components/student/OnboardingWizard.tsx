@@ -11,26 +11,48 @@ import { BasicProfileStep } from './BasicProfileStep';
 import { StudentVerificationStep } from './StudentVerificationStep';
 import { CoverLetterStep } from './CoverLetterStep';
 import { AvailabilityStep } from './AvailabilityStep';
+import { ServicePreferencesStep } from './ServicePreferencesStep';
+import { SafetyComplianceStep } from './SafetyComplianceStep';
 import { ReviewSubmitStep } from './ReviewSubmitStep';
 
 export type OnboardingFormData = {
-  // Step 1: Basic Profile
+  // Step 1: Basic Profile - Personal Details
   name: string;
+  dateOfBirth: string;
   gender: 'male' | 'female' | 'prefer_not_to_say' | '';
   nationality: string;
-  institute: string;
+  phoneNumber: string;
+  email: string;
   city: string;
+  campus: string;
 
-  // Step 2: Student Verification
-  idCardFile: File | null;
-  idCardPreview: string;
-  studentConfirmation: boolean;
-
-  // Step 3: Cover Letter
-  coverLetter: string;
+  // Step 1: Basic Profile - Academic Details
+  institute: string;
+  programDegree: string;
+  yearOfStudy: string;
+  expectedGraduation: string;
   languages: string[];
+
+  // Step 2: Identity Verification
+  studentIdFile: File | null;
+  studentIdPreview: string;
+  studentIdExpiry: string;
+  governmentIdFile: File | null;
+  governmentIdPreview: string;
+  governmentIdExpiry: string;
+  selfieFile: File | null;
+  selfiePreview: string;
+  profilePhotoFile: File | null;
+  profilePhotoPreview: string;
+  documentsOwnedConfirmation: boolean;
+  verificationConsent: boolean;
+
+  // Step 3: Profile Information
+  bio: string;
+  skills: string[];
+  preferredGuideStyle: string;
+  coverLetter: string;
   interests: string[];
-  bio?: string;
 
   // Step 4: Availability
   availability: Array<{
@@ -39,15 +61,34 @@ export type OnboardingFormData = {
     endTime: string;
     note?: string;
   }>;
-  unavailableNotes?: string;
+  unavailabilityExceptions: Array<{
+    date: string;
+    reason?: string;
+  }>;
+  timezone: string;
+  preferredDurations: string[];
+
+  // Step 5: Service Preferences
+  servicesOffered: string[];
+  hourlyRate: string;
+  onlineServicesAvailable: boolean;
+
+  // Step 6: Safety & Compliance
+  termsAccepted: boolean;
+  safetyGuidelinesAccepted: boolean;
+  independentGuideAcknowledged: boolean;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
 };
 
 const STEPS = [
-  { id: 1, name: 'Basic Profile', description: 'Tell us about yourself' },
-  { id: 2, name: 'Verification', description: 'Verify student status' },
-  { id: 3, name: 'Cover Letter', description: 'Describe your expertise' },
+  { id: 1, name: 'Basic Profile', description: 'Personal & academic info' },
+  { id: 2, name: 'Verification', description: 'Identity verification' },
+  { id: 3, name: 'Profile', description: 'Your guide profile' },
   { id: 4, name: 'Availability', description: 'Set your schedule' },
-  { id: 5, name: 'Review', description: 'Review and submit' },
+  { id: 5, name: 'Services', description: 'Service preferences' },
+  { id: 6, name: 'Safety', description: 'Terms & safety' },
+  { id: 7, name: 'Review', description: 'Review and submit' },
 ];
 
 const CITIES = ['Paris', 'London'];
@@ -61,18 +102,59 @@ export function OnboardingWizard({ session }: OnboardingWizardProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<OnboardingFormData>({
+    // Step 1: Basic Profile
     name: session.user.name || '',
+    dateOfBirth: '',
     gender: '',
     nationality: '',
-    institute: '',
+    phoneNumber: '',
+    email: session.user.email || '',
     city: '',
-    idCardFile: null,
-    idCardPreview: '',
-    studentConfirmation: false,
-    coverLetter: '',
+    campus: '',
+    institute: '',
+    programDegree: '',
+    yearOfStudy: '',
+    expectedGraduation: '',
     languages: [],
+
+    // Step 2: Identity Verification
+    studentIdFile: null,
+    studentIdPreview: '',
+    studentIdExpiry: '',
+    governmentIdFile: null,
+    governmentIdPreview: '',
+    governmentIdExpiry: '',
+    selfieFile: null,
+    selfiePreview: '',
+    profilePhotoFile: null,
+    profilePhotoPreview: '',
+    documentsOwnedConfirmation: false,
+    verificationConsent: false,
+
+    // Step 3: Profile Information
+    bio: '',
+    skills: [],
+    preferredGuideStyle: '',
+    coverLetter: '',
     interests: [],
+
+    // Step 4: Availability
     availability: [],
+    unavailabilityExceptions: [],
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    preferredDurations: [],
+
+    // Step 5: Service Preferences
+    servicesOffered: [],
+    hourlyRate: '',
+    onlineServicesAvailable: false,
+
+    // Step 6: Safety & Compliance
+    termsAccepted: false,
+    safetyGuidelinesAccepted: false,
+    independentGuideAcknowledged: false,
+    emergencyContactName: '',
+    emergencyContactPhone: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -89,51 +171,111 @@ export function OnboardingWizard({ session }: OnboardingWizardProps) {
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
 
+    // Step 1: Basic Profile
     if (step === 1) {
       if (!formData.name.trim()) newErrors.name = 'Name is required';
+      if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
       if (!formData.gender) newErrors.gender = 'Gender selection is required';
       if (!formData.nationality.trim()) newErrors.nationality = 'Nationality is required';
-      if (!formData.institute.trim()) newErrors.institute = 'Educational institute is required';
+      if (!formData.phoneNumber.trim()) newErrors.phoneNumber = 'Phone number is required';
       if (!formData.city) newErrors.city = 'City selection is required';
+      if (!formData.campus) newErrors.campus = 'Campus selection is required';
+      if (!formData.institute.trim()) newErrors.institute = 'University name is required';
+      if (!formData.programDegree.trim()) newErrors.programDegree = 'Program/Degree is required';
+      if (!formData.yearOfStudy) newErrors.yearOfStudy = 'Year of study is required';
+      if (!formData.expectedGraduation.trim()) newErrors.expectedGraduation = 'Expected graduation is required';
+      if (formData.languages.length === 0) newErrors.languages = 'At least one language is required';
     }
 
+    // Step 2: Identity Verification
     if (step === 2) {
-      if (!formData.idCardFile && !formData.idCardPreview) {
-        newErrors.idCardFile = 'Student ID card upload is required';
+      if (!formData.studentIdFile && !formData.studentIdPreview) {
+        newErrors.studentIdFile = 'Student ID card upload is required';
       }
-      if (!formData.studentConfirmation) {
-        newErrors.studentConfirmation = 'You must confirm your enrollment status';
+      if (!formData.studentIdExpiry) {
+        newErrors.studentIdExpiry = 'Student ID expiry date is required';
+      }
+      if (!formData.governmentIdFile && !formData.governmentIdPreview) {
+        newErrors.governmentIdFile = 'Government ID upload is required';
+      }
+      if (!formData.governmentIdExpiry) {
+        newErrors.governmentIdExpiry = 'Government ID expiry date is required';
+      }
+      if (!formData.selfieFile && !formData.selfiePreview) {
+        newErrors.selfieFile = 'Selfie upload is required';
+      }
+      if (!formData.profilePhotoFile && !formData.profilePhotoPreview) {
+        newErrors.profilePhotoFile = 'Profile photo upload is required';
+      }
+      if (!formData.documentsOwnedConfirmation) {
+        newErrors.documentsOwnedConfirmation = 'You must confirm document ownership';
+      }
+      if (!formData.verificationConsent) {
+        newErrors.verificationConsent = 'You must consent to verification';
       }
     }
 
+    // Step 3: Profile Information
     if (step === 3) {
+      if (!formData.bio.trim()) {
+        newErrors.bio = 'Bio is required';
+      } else if (formData.bio.trim().length < 50) {
+        newErrors.bio = 'Bio must be at least 50 characters';
+      }
+      if (formData.skills.length === 0) {
+        newErrors.skills = 'At least one skill is required';
+      }
       if (!formData.coverLetter.trim()) {
         newErrors.coverLetter = 'Cover letter is required';
       } else if (formData.coverLetter.trim().length < 200) {
         newErrors.coverLetter = 'Cover letter must be at least 200 characters';
-      }
-      if (formData.languages.length === 0) {
-        newErrors.languages = 'At least one language is required';
       }
       if (formData.interests.length === 0) {
         newErrors.interests = 'At least one interest is required';
       }
     }
 
+    // Step 4: Availability
     if (step === 4) {
       if (formData.availability.length === 0) {
         newErrors.availability = 'At least one availability slot is required';
       } else {
-        // Check if any slot is at least 3 hours
         const hasValidSlot = formData.availability.some((slot) => {
           const start = slot.startTime.split(':').map(Number);
           const end = slot.endTime.split(':').map(Number);
           const duration = (end[0] * 60 + end[1]) - (start[0] * 60 + start[1]);
-          return duration >= 180; // 3 hours in minutes
+          return duration >= 180;
         });
         if (!hasValidSlot) {
-          newErrors.availability = 'At least one slot must be 3+ hours (most experiences are 3-4 hours)';
+          newErrors.availability = 'At least one slot must be 3+ hours';
         }
+      }
+      if (!formData.timezone) newErrors.timezone = 'Timezone is required';
+      if (formData.preferredDurations.length === 0) {
+        newErrors.preferredDurations = 'At least one preferred duration is required';
+      }
+    }
+
+    // Step 5: Service Preferences
+    if (step === 5) {
+      if (formData.servicesOffered.length === 0) {
+        newErrors.servicesOffered = 'At least one service must be selected';
+      }
+      if (!formData.hourlyRate || parseFloat(formData.hourlyRate) <= 0) {
+        newErrors.hourlyRate = 'Valid hourly rate is required';
+      }
+    }
+
+    // Step 6: Safety & Compliance
+    if (step === 6) {
+      if (!formData.termsAccepted) {
+        newErrors.termsAccepted = 'You must accept the Terms & Conditions';
+      }
+      if (!formData.independentGuideAcknowledged) {
+        newErrors.independentGuideAcknowledged = 'You must acknowledge independent guide status';
+      }
+      if (!formData.safetyGuidelinesAccepted) {
+        newErrors.safetyGuidelinesAccepted = 'You must accept safety guidelines';
       }
     }
 
@@ -361,6 +503,20 @@ export function OnboardingWizard({ session }: OnboardingWizardProps) {
               />
             )}
             {currentStep === 5 && (
+              <ServicePreferencesStep
+                formData={formData}
+                updateFormData={updateFormData}
+                errors={errors}
+              />
+            )}
+            {currentStep === 6 && (
+              <SafetyComplianceStep
+                formData={formData}
+                updateFormData={updateFormData}
+                errors={errors}
+              />
+            )}
+            {currentStep === 7 && (
               <ReviewSubmitStep
                 formData={formData}
                 errors={errors}

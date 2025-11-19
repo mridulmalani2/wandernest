@@ -51,17 +51,64 @@ model Student {
   emailVerified     Boolean  @default(false)
   googleId          String?  @unique  // Now optional - supports both Google OAuth and email verification
   name              String?  // Optional until onboarding is completed
+
+  // Personal Details
+  dateOfBirth       DateTime?
   gender            String?  // male, female, prefer_not_to_say
   nationality       String?
-  institute         String?
+  phoneNumber       String?
+  city              String?
+  campus            String?  // Specific campus location
+
+  // Academic Details
+  institute         String?  // University name
+  programDegree     String?  // e.g., "MSc Computer Science", "BA Economics"
+  yearOfStudy       String?  // e.g., "1st year MSc", "2nd year Undergrad"
+  expectedGraduation String? // e.g., "2025", "June 2026"
+
+  // Identity Verification
+  studentIdUrl      String?  // Student ID card upload
+  studentIdExpiry   DateTime?
+  governmentIdUrl   String?  // Passport or national ID
+  governmentIdExpiry DateTime?
+  selfieUrl         String?  // Selfie for verification
+  profilePhotoUrl   String?  // Public profile photo
+  verificationConsent Boolean @default(false)
+  documentsOwnedConfirmation Boolean @default(false)
+
+  // Profile Information
+  bio               String?  @db.Text
+  skills            String[] @default([])  // Skills or areas of interest
+  preferredGuideStyle String? // friendly, structured, energetic, etc.
+
+  // Legacy field (kept for backward compatibility)
   idCardUrl         String?
+
   coverLetter       String?  @db.Text
   languages         String[] @default([])  // Array of language codes
   interests         String[] @default([])  // Array of interest tags
-  bio               String?  @db.Text
+
+  // Service Preferences
+  servicesOffered   String[] @default([])  // walk-around, itinerary, cultural, recommendations
+  hourlyRate        Float?
+  onlineServicesAvailable Boolean @default(false)
+
+  // Availability & Scheduling
+  timezone          String?  // e.g., "Europe/Paris", "Europe/London"
+  preferredDurations String[] @default([])  // e.g., ["1 hour", "2 hours", "3-4 hours"]
+  unavailableDates  Json?    // Array of date ranges when unavailable
+
+  // Safety & Compliance
+  termsAccepted     Boolean  @default(false)
+  safetyGuidelinesAccepted Boolean @default(false)
+  independentGuideAcknowledged Boolean @default(false)
+  emergencyContactName String?
+  emergencyContactPhone String?
+
+  // System Fields
   status            StudentStatus @default(PENDING_APPROVAL)
-  city              String?
-  priceRange        Json?    // {min: number, max: number}
+  profileCompleteness Float? // 0-100 percentage
+  priceRange        Json?    // {min: number, max: number} - legacy field
 
   // Metrics
   tripsHosted       Int      @default(0)
@@ -71,6 +118,7 @@ model Student {
   reliabilityBadge  String?  // bronze, silver, gold
 
   availability      StudentAvailability[]
+  unavailabilityExceptions UnavailabilityException[]
   requestSelections RequestSelection[]
   reviews           Review[]
   reports           Report[]
@@ -95,6 +143,18 @@ model StudentAvailability {
   student     Student  @relation(fields: [studentId], references: [id])
 
   @@index([studentId])
+}
+
+model UnavailabilityException {
+  id          String   @id @default(cuid())
+  studentId   String
+  date        DateTime // Specific date unavailable
+  reason      String?  // Optional reason
+
+  student     Student  @relation(fields: [studentId], references: [id])
+
+  @@index([studentId])
+  @@index([date])
 }
 
 model Tourist {

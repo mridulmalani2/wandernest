@@ -65,13 +65,30 @@ export function CoverLetterStep({ formData, updateFormData, errors, city }: Cove
   const charCount = formData.coverLetter.length;
   const minChars = 200;
 
+  const [customSkill, setCustomSkill] = useState('');
+
+  const toggleSkill = (skill: string) => {
+    const current = formData.skills || [];
+    if (current.includes(skill)) {
+      updateFormData({ skills: current.filter((s) => s !== skill) });
+    } else {
+      updateFormData({ skills: [...current, skill] });
+    }
+  };
+
+  const addCustomSkill = () => {
+    if (customSkill.trim() && !formData.skills.includes(customSkill.trim())) {
+      updateFormData({ skills: [...formData.skills, customSkill.trim()] });
+      setCustomSkill('');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Cover Letter - Your Day-Out Description</h2>
+        <h2 className="text-2xl font-bold mb-2">Profile Information</h2>
         <p className="text-gray-600">
-          Describe a great day-out in {city || 'your city'} for someone from your country.
-          This is your chance to showcase your local expertise!
+          Create your guide profile to showcase your expertise and personality.
         </p>
       </div>
 
@@ -234,17 +251,105 @@ export function CoverLetterStep({ formData, updateFormData, errors, city }: Cove
         {errors.interests && <p className="text-sm text-red-500">{errors.interests}</p>}
       </div>
 
-      {/* Optional Bio */}
+      {/* Skills / Areas of Interest */}
+      <div className="space-y-3">
+        <Label>
+          Skills or Areas of Interest <span className="text-red-500">*</span>
+        </Label>
+        <p className="text-sm text-gray-600">What skills or areas can you help visitors with?</p>
+        <div className="flex flex-wrap gap-2">
+          {COMMON_INTERESTS.map((skill) => (
+            <button
+              key={skill}
+              type="button"
+              onClick={() => toggleSkill(skill)}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                formData.skills.includes(skill)
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {skill}
+            </button>
+          ))}
+        </div>
+
+        {/* Custom Skill */}
+        <div className="flex gap-2">
+          <Input
+            value={customSkill}
+            onChange={(e) => setCustomSkill(e.target.value)}
+            placeholder="Add another skill"
+            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomSkill())}
+          />
+          <Button type="button" variant="outline" onClick={addCustomSkill}>
+            Add
+          </Button>
+        </div>
+
+        {/* Selected Skills */}
+        {formData.skills.length > 0 && (
+          <div className="mt-2">
+            <p className="text-sm font-medium mb-2">Selected ({formData.skills.length}):</p>
+            <div className="flex flex-wrap gap-2">
+              {formData.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center gap-2"
+                >
+                  {skill}
+                  <button
+                    type="button"
+                    onClick={() => toggleSkill(skill)}
+                    className="text-green-600 hover:text-green-800 font-bold"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        {errors.skills && <p className="text-sm text-red-500">{errors.skills}</p>}
+      </div>
+
+      {/* Preferred Guide Style */}
       <div className="space-y-2">
-        <Label htmlFor="bio">Short Bio (Optional)</Label>
+        <Label htmlFor="preferredGuideStyle">Preferred Guide Style</Label>
+        <select
+          id="preferredGuideStyle"
+          value={formData.preferredGuideStyle}
+          onChange={(e) => updateFormData({ preferredGuideStyle: e.target.value })}
+          className="w-full px-3 py-2 border rounded-lg"
+        >
+          <option value="">Select your guide style...</option>
+          <option value="friendly">Friendly & Casual</option>
+          <option value="structured">Structured & Organized</option>
+          <option value="energetic">Energetic & Adventurous</option>
+          <option value="relaxed">Relaxed & Flexible</option>
+          <option value="educational">Educational & Informative</option>
+          <option value="fun">Fun & Entertaining</option>
+        </select>
+        <p className="text-xs text-gray-500">
+          This helps tourists understand your guiding approach
+        </p>
+      </div>
+
+      {/* Bio */}
+      <div className="space-y-2">
+        <Label htmlFor="bio">
+          Short Bio <span className="text-red-500">*</span>
+        </Label>
         <Textarea
           id="bio"
-          value={formData.bio || ''}
+          value={formData.bio}
           onChange={(e) => updateFormData({ bio: e.target.value })}
           placeholder="A brief introduction about yourself (e.g., your major, hobbies, why you love your city...)"
           rows={4}
+          className={errors.bio ? 'border-red-500' : ''}
         />
-        <p className="text-xs text-gray-500">This will appear on your guide profile</p>
+        <p className="text-xs text-gray-500">This will appear on your guide profile (minimum 50 characters)</p>
+        {errors.bio && <p className="text-sm text-red-500">{errors.bio}</p>}
       </div>
     </div>
   );

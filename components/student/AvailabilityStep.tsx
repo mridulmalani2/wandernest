@@ -27,11 +27,25 @@ const TIME_SLOTS = Array.from({ length: 24 }, (_, i) => {
   return `${hour}:00`;
 });
 
+const DURATION_OPTIONS = ['1 hour', '2 hours', '3-4 hours', 'Half day (4-6 hours)', 'Full day (6+ hours)'];
+
+const TIMEZONE_OPTIONS = [
+  { value: 'Europe/Paris', label: 'Paris (CET/CEST)' },
+  { value: 'Europe/London', label: 'London (GMT/BST)' },
+  { value: 'Europe/Berlin', label: 'Berlin (CET/CEST)' },
+  { value: 'Europe/Madrid', label: 'Madrid (CET/CEST)' },
+  { value: 'Europe/Rome', label: 'Rome (CET/CEST)' },
+];
+
 export function AvailabilityStep({ formData, updateFormData, errors }: AvailabilityStepProps) {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('17:00');
   const [note, setNote] = useState('');
+
+  // One-time exception states
+  const [exceptionDate, setExceptionDate] = useState('');
+  const [exceptionReason, setExceptionReason] = useState('');
 
   const addAvailabilitySlot = () => {
     if (selectedDay === null) {
@@ -89,6 +103,53 @@ export function AvailabilityStep({ formData, updateFormData, errors }: Availabil
     updateFormData({
       availability: formData.availability.filter((_, i) => i !== index),
     });
+  };
+
+  const addException = () => {
+    if (!exceptionDate) {
+      alert('Please select a date');
+      return;
+    }
+
+    const exceptions = formData.unavailabilityExceptions || [];
+    const exists = exceptions.some((ex) => ex.date === exceptionDate);
+
+    if (exists) {
+      alert('This date is already added');
+      return;
+    }
+
+    updateFormData({
+      unavailabilityExceptions: [
+        ...exceptions,
+        {
+          date: exceptionDate,
+          reason: exceptionReason.trim() || undefined,
+        },
+      ],
+    });
+
+    setExceptionDate('');
+    setExceptionReason('');
+  };
+
+  const removeException = (index: number) => {
+    updateFormData({
+      unavailabilityExceptions: formData.unavailabilityExceptions.filter((_, i) => i !== index),
+    });
+  };
+
+  const toggleDuration = (duration: string) => {
+    const durations = formData.preferredDurations || [];
+    if (durations.includes(duration)) {
+      updateFormData({
+        preferredDurations: durations.filter((d) => d !== duration),
+      });
+    } else {
+      updateFormData({
+        preferredDurations: [...durations, duration],
+      });
+    }
   };
 
   const getDayLabel = (dayValue: number) => {
@@ -266,19 +327,133 @@ export function AvailabilityStep({ formData, updateFormData, errors }: Availabil
         {errors.availability && <p className="text-sm text-red-500">{errors.availability}</p>}
       </div>
 
-      {/* General Unavailability Notes */}
+      {/* Timezone */}
       <div className="space-y-2">
-        <Label htmlFor="unavailableNotes">Exam Periods / Holiday Notes (Optional)</Label>
-        <Textarea
-          id="unavailableNotes"
-          value={formData.unavailableNotes || ''}
-          onChange={(e) => updateFormData({ unavailableNotes: e.target.value })}
-          placeholder="e.g., Not available May 15-30 (exam period), unavailable Dec 20-Jan 5 (winter break)"
-          rows={3}
-        />
+        <Label htmlFor="timezone">
+          Timezone <span className="text-red-500">*</span>
+        </Label>
+        <select
+          id="timezone"
+          value={formData.timezone}
+          onChange={(e) => updateFormData({ timezone: e.target.value })}
+          className={`w-full px-3 py-2 border rounded-lg ${errors.timezone ? 'border-red-500' : ''}`}
+        >
+          {TIMEZONE_OPTIONS.map((tz) => (
+            <option key={tz.value} value={tz.value}>
+              {tz.label}
+            </option>
+          ))}
+        </select>
         <p className="text-xs text-gray-500">
-          Let us know about upcoming periods when you won't be available. You can update this anytime in your dashboard.
+          Your local timezone for scheduling guide sessions
         </p>
+        {errors.timezone && <p className="text-sm text-red-500">{errors.timezone}</p>}
+      </div>
+
+      {/* Preferred Guide Durations */}
+      <div className="space-y-3">
+        <Label>
+          Preferred Guide Durations <span className="text-red-500">*</span>
+        </Label>
+        <p className="text-sm text-gray-600">What session lengths do you prefer to offer?</p>
+        <div className="flex flex-wrap gap-2">
+          {DURATION_OPTIONS.map((duration) => (
+            <button
+              key={duration}
+              type="button"
+              onClick={() => toggleDuration(duration)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                formData.preferredDurations.includes(duration)
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 border hover:bg-gray-100'
+              }`}
+            >
+              {duration}
+            </button>
+          ))}
+        </div>
+        {formData.preferredDurations.length > 0 && (
+          <p className="text-sm text-green-700">
+            Selected: {formData.preferredDurations.join(', ')}
+          </p>
+        )}
+        {errors.preferredDurations && <p className="text-sm text-red-500">{errors.preferredDurations}</p>}
+      </div>
+
+      {/* One-Time Unavailability Exceptions */}
+      <div className="space-y-4">
+        <div>
+          <Label>One-Time Unavailability (Optional)</Label>
+          <p className="text-sm text-gray-600 mt-1">
+            Add specific dates when you won't be available (e.g., exams, travel, holidays)
+          </p>
+        </div>
+
+        <div className="border rounded-lg p-4 space-y-3 bg-gray-50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <Label>Date</Label>
+              <input
+                type="date"
+                value={exceptionDate}
+                onChange={(e) => setExceptionDate(e.target.value)}
+                min={new Date().toISOString().split('T')[0]}
+                className="w-full px-3 py-2 border rounded-lg"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Reason (Optional)</Label>
+              <input
+                type="text"
+                value={exceptionReason}
+                onChange={(e) => setExceptionReason(e.target.value)}
+                placeholder="e.g., Final exams"
+                className="w-full px-3 py-2 border rounded-lg"
+              />
+            </div>
+          </div>
+          <Button type="button" onClick={addException} variant="outline" className="w-full">
+            Add Unavailable Date
+          </Button>
+        </div>
+
+        {formData.unavailabilityExceptions.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-sm font-medium">
+              Unavailable Dates ({formData.unavailabilityExceptions.length}):
+            </p>
+            <div className="space-y-2">
+              {formData.unavailabilityExceptions.map((exception, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-gray-100 p-3 rounded border"
+                >
+                  <div>
+                    <p className="font-medium">
+                      {new Date(exception.date).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </p>
+                    {exception.reason && (
+                      <p className="text-sm text-gray-600">Reason: {exception.reason}</p>
+                    )}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => removeException(index)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tip */}
