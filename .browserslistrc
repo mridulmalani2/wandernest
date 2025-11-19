@@ -1,0 +1,15 @@
+# Modern browsers - ES6+ modules
+# These browsers receive the optimized, modern build
+[modern]
+edge >= 79
+firefox >= 67
+chrome >= 64
+safari >= 12
+ios >= 12
+samsung >= 8.2
+
+# Legacy browsers - ES5 fallback
+# Only served when modern build is not supported
+[legacy]
+defaults
+ie 11
