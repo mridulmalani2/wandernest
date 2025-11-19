@@ -111,16 +111,29 @@ export default function StudentSignIn() {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 gradient-mesh" />
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Student studying with books and learning materials"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/25 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-pink-600/20" />
+      </div>
+      <div className="absolute inset-0 pattern-dots opacity-15" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="border-b bg-white/80 backdrop-blur-sm shadow-sm">
+        <header className="border-b-2 glass-card border-white/40 shadow-premium animate-fade-in">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <Link href="/" className="flex items-center space-x-2 group">
-              <div className="p-1.5 rounded-lg bg-gradient-primary text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="p-1.5 rounded-lg gradient-ocean text-white group-hover:scale-110 transition-transform duration-300 shadow-soft">
                 <Globe className="w-6 h-6" />
               </div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -129,7 +142,7 @@ export default function StudentSignIn() {
             </Link>
             <nav className="flex items-center space-x-4">
               <Link href="/student">
-                <Button variant="ghost" className="hover-lift">Back to Student Page</Button>
+                <Button variant="ghost" className="hover-lift shadow-soft">Back to Student Page</Button>
               </Link>
             </nav>
           </div>
@@ -139,8 +152,8 @@ export default function StudentSignIn() {
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="max-w-md w-full space-y-8 animate-fade-in-up">
             <div className="text-center space-y-3">
-              <h2 className="text-4xl font-bold">Sign in as a Student Guide</h2>
-              <p className="text-lg text-gray-600">
+              <h2 className="text-4xl font-bold text-white text-shadow-lg">Sign in as a Student Guide</h2>
+              <p className="text-lg text-white text-shadow">
                 {step === 'email'
                   ? 'Use your student email to get started'
                   : 'Enter the verification code sent to your email'}
@@ -149,7 +162,7 @@ export default function StudentSignIn() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50/80 backdrop-blur-sm border border-red-300 rounded-2xl p-4 shadow-lg animate-scale-in">
+              <div className="glass-card bg-red-50/90 border-2 border-red-300 rounded-2xl p-4 shadow-premium animate-scale-in">
                 <div className="flex items-start space-x-3">
                   <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
                   <div>
@@ -161,10 +174,10 @@ export default function StudentSignIn() {
             )}
 
             {/* Sign In Box */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200 p-8 shadow-xl space-y-6">
+            <div className="glass-card rounded-3xl border-2 border-white/40 p-8 shadow-premium space-y-6">
               {step === 'email' ? (
                 <form onSubmit={handleEmailSubmit} className="space-y-6">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-200 rounded-2xl p-4">
+                  <div className="glass-frosted bg-gradient-to-br from-blue-50 to-blue-100/50 border-2 border-blue-200 rounded-2xl p-4 shadow-soft">
                     <div className="flex items-start space-x-3">
                       <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                       <div>
@@ -197,7 +210,7 @@ export default function StudentSignIn() {
 
                   <Button
                     type="submit"
-                    className="w-full h-12 text-base gradient-primary hover:opacity-90 transition-opacity shadow-lg"
+                    className="w-full h-12 text-base gradient-ocean hover:shadow-glow-blue shadow-premium hover-lift"
                     size="lg"
                     disabled={loading || !email}
                   >
@@ -210,7 +223,7 @@ export default function StudentSignIn() {
                 </form>
               ) : (
                 <form onSubmit={handleVerifySubmit} className="space-y-6">
-                  <div className="bg-gradient-to-br from-green-50 to-green-100/50 border border-green-200 rounded-2xl p-4">
+                  <div className="glass-frosted bg-gradient-to-br from-green-50 to-green-100/50 border-2 border-green-200 rounded-2xl p-4 shadow-soft">
                     <div className="flex items-start space-x-3">
                       <Mail className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
@@ -244,7 +257,7 @@ export default function StudentSignIn() {
 
                   <Button
                     type="submit"
-                    className="w-full h-12 text-base gradient-primary hover:opacity-90 transition-opacity shadow-lg"
+                    className="w-full h-12 text-base gradient-ocean hover:shadow-glow-blue shadow-premium hover-lift"
                     size="lg"
                     disabled={loading || code.length !== 6}
                   >
@@ -305,8 +318,8 @@ export default function StudentSignIn() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t bg-white/80 backdrop-blur-sm">
-          <div className="container mx-auto px-4 py-8 text-center text-gray-600">
+        <footer className="border-t-2 glass-card border-white/40 animate-fade-in">
+          <div className="container mx-auto px-4 py-8 text-center text-gray-700">
             <p>&copy; {new Date().getFullYear()} WanderNest. All rights reserved.</p>
           </div>
         </footer>

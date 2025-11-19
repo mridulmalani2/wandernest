@@ -42,72 +42,80 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center px-4">
-      <div className="max-w-md w-full relative overflow-hidden rounded-lg shadow-xl p-8">
-        <div className="absolute inset-0 opacity-10">
-          <Image
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
-            alt="Admin dashboard background"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm" />
-        <div className="relative z-10">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Login</h1>
-          <p className="text-gray-600">Sign in to access the admin dashboard</p>
-        </div>
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background Image with Overlays */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&q=80)',
+        }}
+        role="img"
+        aria-label="Professional office workspace and analytics"
+      >
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-[4px]" />
+        {/* Gradient overlay for visual depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/15 to-indigo-600/20" />
+      </div>
+      <div className="absolute inset-0 pattern-grid opacity-10" />
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="admin@wandernest.com"
-            />
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+        <div className="max-w-md w-full glass-card rounded-3xl border-2 border-white/40 shadow-premium p-8 animate-fade-in-up hover-lift">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Login</h1>
+            <p className="text-gray-700">Sign in to access the admin dashboard</p>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter your password"
-            />
-          </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-sm text-red-600">{error}</p>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-soft"
+                placeholder="admin@wandernest.com"
+              />
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 transition-all"
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-soft"
+                placeholder="Enter your password"
+              />
+            </div>
 
-        <div className="mt-6 text-center">
-          <a href="/" className="text-sm text-gray-600 hover:text-gray-900">
-            Back to home
-          </a>
-        </div>
+            {error && (
+              <div className="glass-frosted bg-red-50/90 border-2 border-red-300 rounded-lg p-3 shadow-soft">
+                <p className="text-sm text-red-700 font-semibold">{error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full gradient-ocean text-white py-3 rounded-lg font-medium hover:shadow-glow-blue shadow-premium disabled:opacity-50 hover-lift"
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <a href="/" className="text-sm text-gray-700 hover:text-gray-900 font-medium hover:underline">
+              Back to home
+            </a>
+          </div>
         </div>
       </div>
     </div>
