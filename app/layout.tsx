@@ -6,7 +6,7 @@ import Script from 'next/script'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'], // Reduced from 5 to 3 weights
   variable: '--font-inter',
   display: 'swap',
   preload: true,
@@ -15,7 +15,7 @@ const inter = Inter({
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '600', '700', '900'], // Reduced from 6 to 4 weights
   variable: '--font-playfair',
   display: 'swap',
   preload: true,
@@ -116,6 +116,8 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
