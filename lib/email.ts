@@ -1,9 +1,13 @@
 import 'server-only'
 import nodemailer from 'nodemailer'
 
-// Helper function to get base URL with fallback
+// Helper function to get base URL - requires environment variable
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL;
+  if (!baseUrl) {
+    throw new Error('NEXT_PUBLIC_BASE_URL or NEXTAUTH_URL environment variable is required');
+  }
+  return baseUrl;
 }
 
 // Mock mode - set to true to bypass actual email sending
