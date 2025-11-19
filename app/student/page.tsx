@@ -28,9 +28,9 @@ export default function StudentLandingPage() {
               <div className="p-1.5 rounded-lg gradient-vibrant text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-premium">
                 <Globe className="w-6 h-6" />
               </div>
-              <h1 className="text-2xl font-bold text-gradient-vibrant">
+              <span className="text-2xl font-bold text-gradient-vibrant">
                 WanderNest
-              </h1>
+              </span>
             </Link>
             <nav className="flex items-center space-x-3">
               <Link href="/">
@@ -51,14 +51,14 @@ export default function StudentLandingPage() {
 
             {/* Hero */}
             <div className="text-center space-y-8 animate-slide-up-fade">
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
                 Earn More Than{' '}
                 <span className="text-gradient-vibrant animate-gradient-shift inline-block">
                   Campus Jobs
                 </span>
                 <br />
                 While Sharing Your City
-              </h2>
+              </h1>
 
               <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
                 Host visitors from your home country in Paris or London and earn more than typical student jobs.
@@ -86,7 +86,7 @@ export default function StudentLandingPage() {
                 />
               </div>
               <div className="relative z-10 p-8 md:p-12">
-                <h3 className="text-4xl font-bold text-center mb-12">Why Guide with WanderNest?</h3>
+                <h2 className="text-4xl font-bold text-center mb-12">Why Guide with WanderNest?</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-2xl p-6 shadow-sm hover-lift group">
                   <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -133,7 +133,7 @@ export default function StudentLandingPage() {
 
             {/* How It Works */}
             <div className="space-y-10 animate-fade-in-up delay-500">
-              <h3 className="text-4xl font-bold text-center text-gradient-vibrant">How It Works</h3>
+              <h2 className="text-4xl font-bold text-center text-gradient-vibrant">How It Works</h2>
               <div className="grid md:grid-cols-4 gap-8">
                 <div className="text-center space-y-4 group hover-lift">
                   <div className="w-20 h-20 gradient-ocean rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-glow-blue group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
@@ -179,7 +179,7 @@ export default function StudentLandingPage() {
 
             {/* Mini FAQ */}
             <div className="glass-card rounded-3xl border-2 border-white/40 p-8 md:p-12 shadow-premium hover:shadow-elevated animate-fade-in-up delay-700">
-              <h3 className="text-4xl font-bold text-center mb-10 text-gradient-vibrant">Common Questions</h3>
+              <h2 className="text-4xl font-bold text-center mb-10 text-gradient-vibrant">Common Questions</h2>
 
               <div className="space-y-4">
                 <details className="group rounded-xl border-2 border-gray-200 p-5 hover:border-blue-400 hover:shadow-soft transition-all hover-lift bg-white/50">
@@ -228,9 +228,45 @@ export default function StudentLandingPage() {
               </div>
             </div>
 
+            {/* Benefits Visualization with Images */}
+            <div className="grid md:grid-cols-2 gap-8 animate-fade-in-up delay-800">
+              <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl group">
+                <Image
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+                  alt="Students working together and networking"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-8">
+                  <div className="text-white space-y-2">
+                    <h3 className="text-2xl font-bold">Build Your Network</h3>
+                    <p className="text-sm text-white/90">
+                      Connect with travelers from around the world and expand your cultural horizons
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl group">
+                <Image
+                  src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80"
+                  alt="Students celebrating success and achievement"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-8">
+                  <div className="text-white space-y-2">
+                    <h3 className="text-2xl font-bold">Earn While You Learn</h3>
+                    <p className="text-sm text-white/90">
+                      Make meaningful income on your own schedule while pursuing your degree
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Final CTA */}
             <div className="text-center space-y-6 py-12 animate-fade-in-up delay-1000">
-              <h3 className="text-4xl md:text-5xl font-bold text-gradient-vibrant">Ready to Start Earning?</h3>
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-vibrant">Ready to Start Earning?</h2>
               <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed font-medium">
                 Join hundreds of students already earning flexible income by sharing their city with visitors.
               </p>

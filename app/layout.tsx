@@ -16,8 +16,57 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'WanderNest - Connect with Local Student Guides',
-  description: 'Experience authentic travel with local student guides',
+  metadataBase: new URL('https://wandernest.vercel.app'),
+  title: {
+    default: 'WanderNest - Connect with Local Student Guides for Authentic Travel',
+    template: '%s | WanderNest'
+  },
+  description: 'Experience authentic travel with verified local student guides. Discover hidden gems, get personalized recommendations, and explore cities like a local. Connect with university students in Paris, London, and beyond.',
+  keywords: ['local travel guide', 'student guides', 'authentic travel', 'local experiences', 'university students', 'travel marketplace', 'cultural exchange', 'personalized tours', 'local insights', 'travel companions'],
+  authors: [{ name: 'WanderNest' }],
+  creator: 'WanderNest',
+  publisher: 'WanderNest',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://wandernest.vercel.app',
+    title: 'WanderNest - Connect with Local Student Guides for Authentic Travel',
+    description: 'Experience authentic travel with verified local student guides. Discover hidden gems and explore cities like a local.',
+    siteName: 'WanderNest',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&h=630&fit=crop',
+        width: 1200,
+        height: 630,
+        alt: 'Group of young travelers exploring a city together',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'WanderNest - Connect with Local Student Guides',
+    description: 'Experience authentic travel with verified local student guides. Discover hidden gems and explore cities like a local.',
+    images: ['https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&h=630&fit=crop'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
 }
 
 export default function RootLayout({

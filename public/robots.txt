@@ -1,0 +1,21 @@
+# robots.txt for WanderNest
+User-agent: *
+Allow: /
+Allow: /tourist
+Allow: /student
+Allow: /booking
+
+# Disallow private/authenticated pages
+Disallow: /admin/
+Disallow: /api/
+Disallow: /student/dashboard
+Disallow: /student/onboarding
+Disallow: /tourist/dashboard
+Disallow: /matches/
+Disallow: /payment/
+
+# Crawl delay
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://wandernest.vercel.app/sitemap.xml

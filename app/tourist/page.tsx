@@ -34,9 +34,9 @@ export default function TouristLanding() {
               <div className="p-1.5 rounded-lg gradient-vibrant text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-premium">
                 <Globe className="w-6 h-6" />
               </div>
-              <h1 className="text-2xl font-bold text-gradient-vibrant">
+              <span className="text-2xl font-bold text-gradient-vibrant">
                 WanderNest
-              </h1>
+              </span>
             </Link>
             <nav className="flex items-center space-x-3">
               <Link href="/">
@@ -55,14 +55,14 @@ export default function TouristLanding() {
         <main className="flex-1 container mx-auto px-4 py-16">
           <div className="max-w-5xl mx-auto space-y-12">
             <div className="text-center space-y-8 animate-slide-up-fade">
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight">
                 Experience{' '}
                 <span className="text-gradient-vibrant animate-gradient-shift inline-block">
                   Authentic Travel
                 </span>
                 <br />
                 with Local Student Guides
-              </h2>
+              </h1>
 
               <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
                 Connect with verified university students who will show you their city
@@ -89,7 +89,7 @@ export default function TouristLanding() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-amber-900 mb-3 text-lg">Important Notice</h3>
+                  <h2 className="font-bold text-amber-900 mb-3 text-lg">Important Notice</h2>
                   <p className="text-sm text-amber-900 mb-3 leading-relaxed">
                     <strong>WanderNest is a marketplace connector only.</strong> We facilitate connections between tourists and local student guides but do not:
                   </p>
@@ -177,6 +177,79 @@ export default function TouristLanding() {
                   <p className="text-gray-600 leading-relaxed">
                     Discover hidden gems and local favorites off the beaten path
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* How It Works Section */}
+            <div className="space-y-10 pt-12 animate-fade-in-up delay-500">
+              <h2 className="text-4xl font-bold text-center text-gradient-vibrant">How It Works</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center space-y-4 group hover-lift">
+                  <div className="w-20 h-20 gradient-ocean rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-glow-blue group-hover:scale-110 transition-all duration-300">
+                    1
+                  </div>
+                  <h3 className="font-bold text-lg">Submit Your Request</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Tell us about your trip preferences, dates, and interests
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4 group hover-lift">
+                  <div className="w-20 h-20 gradient-vibrant rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-glow-purple group-hover:scale-110 transition-all duration-300">
+                    2
+                  </div>
+                  <h3 className="font-bold text-lg">Get Matched with Guides</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    We match you with verified student guides who fit your needs
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4 group hover-lift">
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto text-3xl font-bold text-white shadow-premium group-hover:shadow-soft group-hover:scale-110 transition-all duration-300">
+                    3
+                  </div>
+                  <h3 className="font-bold text-lg">Experience the City</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Connect directly with your guide and enjoy an authentic local experience
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Image showcase */}
+            <div className="grid md:grid-cols-3 gap-6 pt-12 animate-fade-in-up delay-600">
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80"
+                  alt="Iconic Paris architecture and streets"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <span className="text-white font-bold text-xl">Paris</span>
+                </div>
+              </div>
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80"
+                  alt="Iconic London landmarks and architecture"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <span className="text-white font-bold text-xl">London</span>
+                </div>
+              </div>
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg group">
+                <Image
+                  src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&q=80"
+                  alt="Beautiful Rome cityscape with historic architecture"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <span className="text-white font-bold text-xl">Rome</span>
                 </div>
               </div>
             </div>
