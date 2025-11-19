@@ -44,6 +44,37 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
+  // Compiler optimizations for modern browsers
+  compiler: {
+    // Remove console logs in production
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+
+  // Experimental features for better optimization
+  experimental: {
+    // Optimize package imports to reduce bundle size
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-select',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-checkbox',
+      '@radix-ui/react-label',
+      '@radix-ui/react-radio-group',
+      '@radix-ui/react-slider',
+      'date-fns',
+    ],
+  },
+
+  // Webpack configuration for modern output
+  webpack: (config, { isServer }) => {
+    // Target modern browsers with ES2020+ features
+    config.target = isServer ? 'node16' : ['web', 'es2020'];
+
+    return config;
+  },
+
   // Headers are now configured in vercel.json for better Vercel integration
 }
 
