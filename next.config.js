@@ -14,6 +14,9 @@ const nextConfig = {
   // Production browser source maps disabled for smaller bundles
   productionBrowserSourceMaps: false,
 
+  // Production-specific settings
+  productionBrowserSourceMaps: false, // Disable source maps in production for smaller bundles
+
   // Compiler optimizations for production
   compiler: {
     // Remove console logs in production (except errors and warnings)
@@ -22,8 +25,9 @@ const nextConfig = {
     } : false,
   },
 
-  // Optimize package imports to reduce bundle size
+  // Experimental features for better optimization
   experimental: {
+    // Optimize package imports to reduce bundle size
     optimizePackageImports: [
       'lucide-react',
       '@radix-ui/react-select',
@@ -33,7 +37,11 @@ const nextConfig = {
       '@radix-ui/react-radio-group',
       '@radix-ui/react-slider',
       'date-fns',
+      'react-hook-form',
+      'zod',
     ],
+    // Optimize CSS bundle size
+    optimizeCss: true,
   },
 
   // Image optimization configuration
@@ -54,57 +62,71 @@ const nextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 1080, 1920],
-    imageSizes: [16, 32, 64, 96, 128, 256],
+    deviceSizes: [640, 750, 1080, 1920], // Reduced from default 8 to 4
+    imageSizes: [16, 32, 64, 96, 128, 256], // Reduced from default 8 to 6
     minimumCacheTTL: 31536000, // 1 year cache
   },
 
-  // Webpack configuration for modern browsers and optimization
+  // Webpack configuration for modern output and optimizations
   webpack: (config, { dev, isServer }) => {
-    // Target modern browsers with ES2020+ features (no legacy polyfills)
-    config.target = isServer ? 'node18' : ['web', 'es2020'];
+    // Target modern browsers with ES2020+ features
+    config.target = isServer ? 'node16' : ['web', 'es2020'];
 
-    // Production optimizations
+    // Configure source maps for production builds
     if (!dev) {
       // Enable source maps for production debugging
       config.devtool = 'source-map';
 
-      // Enhanced tree shaking and dead code elimination
+      // Enhanced optimization for production
       config.optimization = {
         ...config.optimization,
-        usedExports: true, // Tree shaking
-        sideEffects: true, // Respect package.json sideEffects
-        moduleIds: 'deterministic', // Better for long-term caching
-
-        // Split chunks for better caching
+        // Keep module IDs readable for better debugging
+        moduleIds: 'named',
+        // Better tree shaking
+        usedExports: true,
+        // Split chunks more aggressively to improve caching
         splitChunks: {
           chunks: 'all',
           cacheGroups: {
-            // Split vendor code into separate chunk
+            // Separate vendor chunks for better caching
             default: false,
             vendors: false,
-            // Framework chunk (React, Next.js)
+            // Framework chunk (React, React-DOM, Next.js)
             framework: {
               name: 'framework',
               chunks: 'all',
-              test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|next)[\\/]/,
+              test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
               priority: 40,
               enforce: true,
             },
-            // Common libraries
-            lib: {
-              test: /[\\/]node_modules[\\/]/,
-              name(module) {
-                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-                return `lib.${packageName.replace('@', '')}`;
-              },
-              priority: 30,
-              minChunks: 1,
-              reuseExistingChunk: true,
+            // Auth libraries (next-auth, bcryptjs, etc.)
+            auth: {
+              name: 'auth',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](next-auth|bcryptjs|jsonwebtoken)[\\/]/,
+              priority: 35,
+              enforce: true,
             },
-            // Commons chunk for shared code
+            // UI libraries (Radix UI)
+            ui: {
+              name: 'ui',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+              priority: 30,
+              enforce: true,
+            },
+            // Icons and utilities
+            lib: {
+              name: 'lib',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](lucide-react|clsx|tailwind-merge|class-variance-authority)[\\/]/,
+              priority: 25,
+              enforce: true,
+            },
+            // Common shared code
             commons: {
               name: 'commons',
+              chunks: 'all',
               minChunks: 2,
               priority: 20,
             },
@@ -115,6 +137,8 @@ const nextConfig = {
 
     return config;
   },
+
+  // Headers are configured in vercel.json for better Vercel integration
 }
 
 module.exports = withBundleAnalyzer(nextConfig)

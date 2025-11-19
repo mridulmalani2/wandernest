@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './critical.css'
 import { Providers } from './providers'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -84,8 +82,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <head>
-        {/* DNS prefetch for image CDN - Next.js handles font preconnects automatically */}
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        {/* Preconnect to Google Fonts for faster font loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Preconnect to image CDN for faster image loading */}
+        <link rel="preconnect" href="https://images.unsplash.com" />
       </head>
       <body className={inter.className}>
         <Providers>
@@ -97,8 +99,6 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )

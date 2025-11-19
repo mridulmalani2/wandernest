@@ -1,11 +1,10 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import Navigation from '@/components/Navigation'
 import { GraduationCap, MessageCircle, Star, AlertTriangle } from 'lucide-react'
+import { DynamicNavigation } from '@/components/DynamicNavigation'
 
+// Server Component - no client-side bundle overhead
 export default function TouristLanding() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -16,7 +15,7 @@ export default function TouristLanding() {
           alt="Beautiful London Thames River with iconic architecture"
           fill
           priority
-          quality={85}
+          quality={70}
           sizes="100vw"
           className="object-cover"
         />
@@ -29,8 +28,8 @@ export default function TouristLanding() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header */}
-        <Navigation variant="tourist" />
+        {/* Header - Dynamically imported to reduce initial bundle */}
+        <DynamicNavigation variant="tourist" />
 
         {/* Hero Section */}
         <main className="flex-1 container mx-auto px-4 py-16">
@@ -107,9 +106,10 @@ export default function TouristLanding() {
                     src="https://images.unsplash.com/photo-1529667083337-e36bedc13cfa?w=800&q=80"
                     alt="University students learning and collaborating"
                     fill
-                    quality={75}
+                    quality={60}
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-blue-300/20" />
@@ -131,9 +131,10 @@ export default function TouristLanding() {
                     src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80"
                     alt="Cozy Parisian cafe with authentic ambiance"
                     fill
-                    quality={75}
+                    quality={60}
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-purple-300/20" />
@@ -155,9 +156,10 @@ export default function TouristLanding() {
                     src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=800&q=80"
                     alt="Iconic London bridge and cityscape"
                     fill
-                    quality={75}
+                    quality={60}
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-pink-300/20" />
@@ -210,16 +212,17 @@ export default function TouristLanding() {
               </div>
             </div>
 
-            {/* Image showcase */}
+            {/* Image showcase - lazy loaded */}
             <div className="grid md:grid-cols-3 gap-6 pt-12 animate-fade-in-up delay-600">
               <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg group">
                 <Image
                   src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80"
                   alt="Iconic Paris architecture and streets"
                   fill
-                  quality={80}
+                  quality={70}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                   <span className="text-white font-bold text-xl">Paris</span>
@@ -230,9 +233,10 @@ export default function TouristLanding() {
                   src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80"
                   alt="Iconic London landmarks and architecture"
                   fill
-                  quality={80}
+                  quality={70}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                   <span className="text-white font-bold text-xl">London</span>
@@ -243,9 +247,10 @@ export default function TouristLanding() {
                   src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600&q=80"
                   alt="Beautiful Rome cityscape with historic architecture"
                   fill
-                  quality={80}
+                  quality={70}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                   <span className="text-white font-bold text-xl">Rome</span>
