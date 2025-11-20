@@ -46,8 +46,8 @@ export default function StudentCTA() {
       <Link href="/student" className="block">
       */}
       <CTATileBase
-        backgroundImage="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=85"
-        imageAlt="University students collaborating and learning together on campus"
+        backgroundImage="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&q=85"
+        imageAlt="University students walking on campus with books and backpacks"
         headline="Student"
         description="Earn by guiding travelers. Show your city and share local insights."
         gradientFrom="from-purple-600/40"

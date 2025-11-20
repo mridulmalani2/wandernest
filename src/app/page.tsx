@@ -235,8 +235,8 @@ export default function MainLanding() {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl group">
                   <Image
-                    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80"
-                    alt="Young university students collaborating and sharing knowledge"
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
+                    alt="University students working together in modern campus setting"
                     fill
                     loading="lazy"
                     quality={75}
@@ -295,8 +295,8 @@ export default function MainLanding() {
                 </div>
                 <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl group order-1 md:order-2">
                   <Image
-                    src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80"
-                    alt="Group of young travelers exploring a European city together"
+                    src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&q=80"
+                    alt="Friends enjoying flexible travel together in a European city"
                     fill
                     loading="lazy"
                     quality={75}

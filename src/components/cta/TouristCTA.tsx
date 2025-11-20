@@ -19,8 +19,8 @@ export default function TouristCTA() {
   return (
     <Link href="/tourist" className="block">
       <CTATileBase
-        backgroundImage="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=85"
-        imageAlt="Traveler exploring a beautiful European city with backpack"
+        backgroundImage="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?w=1200&q=85"
+        imageAlt="Traveler standing on mountain overlooking scenic European landscape"
         headline="Tourist"
         description="Explore with a local student guide. Personalized and authentic experiences."
         gradientFrom="from-blue-600/40"
