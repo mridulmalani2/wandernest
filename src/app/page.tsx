@@ -52,10 +52,7 @@ export default function MainLanding() {
             {/* Hero Title */}
             <div className="space-y-6 animate-slide-up-fade">
               <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight tracking-tight text-white text-shadow-lg">
-                Experience{' '}
-                <span className="text-white bg-gradient-to-br from-purple-600/40 via-blue-600/40 to-pink-600/40 animate-gradient-shift inline-block px-4 py-2 rounded-2xl backdrop-blur-sm border border-white/20">
-                  Authentic Travel
-                </span>
+                Experience Authentic Travel
                 <br />
                 <span className="relative inline-block">
                   with Local Student Guides
@@ -71,10 +68,10 @@ export default function MainLanding() {
             </div>
 
             {/* Two Large CTAs - Photo Cards with Glass Frame Effect */}
-            <div className="grid md:grid-cols-2 gap-8 pt-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 pt-8 max-w-4xl mx-auto">
               {/* Tourist CTA */}
               <Link href="/tourist" className="animate-fade-in-up block">
-                <div className="group cursor-pointer rounded-3xl shadow-xl hover:shadow-elevated transition-all duration-500 relative overflow-hidden h-[400px] md:h-[450px] hover:scale-105 hover:-translate-y-2 focus-visible:outline-3 focus-visible:outline-blue-500 focus-visible:outline-offset-4">
+                <div className="group cursor-pointer rounded-2xl shadow-xl hover:shadow-elevated transition-all duration-500 relative overflow-hidden h-[200px] md:h-[225px] hover:scale-105 hover:-translate-y-2 focus-visible:outline-3 focus-visible:outline-blue-500 focus-visible:outline-offset-4">
                   {/* Photo - Fully visible like a photo card */}
                   <div className="absolute inset-0">
                     <Image
@@ -91,33 +88,33 @@ export default function MainLanding() {
                   </div>
 
                   {/* Glass border/frame effect - subtle frosted edge */}
-                  <div className="absolute inset-0 rounded-3xl border-4 border-white/40 backdrop-blur-[2px] pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl border-2 border-white/40 backdrop-blur-[2px] pointer-events-none" />
 
                   {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-10">
+                  <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-5">
                     {/* Default state content - Always visible */}
-                    <div className="space-y-3">
-                      <div className="inline-flex p-3 rounded-2xl bg-blue-500/90 backdrop-blur-sm text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Plane className="w-8 h-8" />
+                    <div className="space-y-2">
+                      <div className="inline-flex p-2 rounded-xl bg-blue-500/90 backdrop-blur-sm text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <Plane className="w-5 h-5" />
                       </div>
 
-                      <h2 className="text-4xl md:text-5xl font-serif font-bold text-white text-shadow-lg tracking-tight">
+                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-white text-shadow-lg tracking-tight">
                         I&apos;m a Tourist
                       </h2>
 
-                      <p className="text-lg md:text-xl text-white font-sans text-shadow">
+                      <p className="text-sm md:text-base text-white font-sans text-shadow">
                         Discover the city with locals
                       </p>
                     </div>
 
                     {/* Hover state content - Expands and reveals */}
-                    <div className="mt-6 space-y-4 max-h-0 opacity-0 group-hover:max-h-56 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
-                      <p className="text-base md:text-lg text-white/95 leading-relaxed font-sans text-shadow-sm">
+                    <div className="mt-3 space-y-2 max-h-0 opacity-0 group-hover:max-h-32 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
+                      <p className="text-xs md:text-sm text-white/95 leading-relaxed font-sans text-shadow-sm">
                         Find local student guides to show you authentic experiences and hidden gems in your destination city.
                       </p>
 
-                      <div className="pt-2">
-                        <span className="inline-flex items-center text-base md:text-lg font-serif font-semibold text-white bg-blue-600/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-lg hover:bg-blue-500/90 transition-colors">
+                      <div className="pt-1">
+                        <span className="inline-flex items-center text-xs md:text-sm font-serif font-semibold text-white bg-blue-600/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg hover:bg-blue-500/90 transition-colors">
                           Explore as Tourist
                           <span className="ml-2 group-hover:translate-x-2 transition-transform inline-block">→</span>
                         </span>
@@ -132,7 +129,7 @@ export default function MainLanding() {
               {/* Temporary redirect to Google Form while building student onboarding flow */}
               {/* <Link href="/student" className="animate-fade-in-up delay-100 block"> */}
               <a href={STUDENT_SIGNUP_FORM_URL} target="_blank" rel="noopener noreferrer" className="animate-fade-in-up delay-100 block">
-                <div className="group cursor-pointer rounded-3xl shadow-xl hover:shadow-elevated transition-all duration-500 relative overflow-hidden h-[400px] md:h-[450px] hover:scale-105 hover:-translate-y-2 focus-visible:outline-3 focus-visible:outline-purple-500 focus-visible:outline-offset-4">
+                <div className="group cursor-pointer rounded-2xl shadow-xl hover:shadow-elevated transition-all duration-500 relative overflow-hidden h-[200px] md:h-[225px] hover:scale-105 hover:-translate-y-2 focus-visible:outline-3 focus-visible:outline-purple-500 focus-visible:outline-offset-4">
                   {/* Photo - Fully visible like a photo card */}
                   <div className="absolute inset-0">
                     <Image
@@ -149,33 +146,33 @@ export default function MainLanding() {
                   </div>
 
                   {/* Glass border/frame effect - subtle frosted edge */}
-                  <div className="absolute inset-0 rounded-3xl border-4 border-white/40 backdrop-blur-[2px] pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl border-2 border-white/40 backdrop-blur-[2px] pointer-events-none" />
 
                   {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-10">
+                  <div className="relative z-10 h-full flex flex-col justify-end p-4 md:p-5">
                     {/* Default state content - Always visible */}
-                    <div className="space-y-3">
-                      <div className="inline-flex p-3 rounded-2xl bg-purple-500/90 backdrop-blur-sm text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <GraduationCap className="w-8 h-8" />
+                    <div className="space-y-2">
+                      <div className="inline-flex p-2 rounded-xl bg-purple-500/90 backdrop-blur-sm text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <GraduationCap className="w-5 h-5" />
                       </div>
 
-                      <h2 className="text-4xl md:text-5xl font-serif font-bold text-white text-shadow-lg tracking-tight">
+                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-white text-shadow-lg tracking-tight">
                         I&apos;m a Student
                       </h2>
 
-                      <p className="text-lg md:text-xl text-white font-sans text-shadow">
+                      <p className="text-sm md:text-base text-white font-sans text-shadow">
                         Earn while sharing your city
                       </p>
                     </div>
 
                     {/* Hover state content - Expands and reveals */}
-                    <div className="mt-6 space-y-4 max-h-0 opacity-0 group-hover:max-h-56 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
-                      <p className="text-base md:text-lg text-white/95 leading-relaxed font-sans text-shadow-sm">
+                    <div className="mt-3 space-y-2 max-h-0 opacity-0 group-hover:max-h-32 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
+                      <p className="text-xs md:text-sm text-white/95 leading-relaxed font-sans text-shadow-sm">
                         Become a guide and earn money by showing travelers around your city with flexible hours.
                       </p>
 
-                      <div className="pt-2">
-                        <span className="inline-flex items-center text-base md:text-lg font-serif font-semibold text-white bg-purple-600/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-lg hover:bg-purple-500/90 transition-colors">
+                      <div className="pt-1">
+                        <span className="inline-flex items-center text-xs md:text-sm font-serif font-semibold text-white bg-purple-600/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg hover:bg-purple-500/90 transition-colors">
                           Start Guiding
                           <span className="ml-2 group-hover:translate-x-2 transition-transform inline-block">→</span>
                         </span>
