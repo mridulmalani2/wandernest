@@ -51,7 +51,7 @@ export default function StudentLandingPage() {
               </p>
 
               <div className="flex justify-center gap-4 pt-4 animate-fade-in-up delay-300">
-                <Link href="/student/signin">
+                <Link href="/student/onboarding">
                   <Button size="lg" className="text-lg px-10 py-7 gradient-vibrant hover:shadow-glow-purple shadow-premium text-white font-semibold group hover-lift">
                     Explore Now
                     <span className="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
