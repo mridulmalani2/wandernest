@@ -86,13 +86,16 @@ export default function StudentDashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [processingRequests, setProcessingRequests] = useState<Set<string>>(new Set())
 
+  // PHASE 2 NOTE: Auth disabled for preview mode - token check bypassed
+  // Dashboard loads immediately with demo data
   useEffect(() => {
-    const token = localStorage.getItem('student_token')
-    if (!token) {
-      router.push('/student/signin')
-      return
-    }
-    fetchDashboardData(token)
+    // const token = localStorage.getItem('student_token')
+    // if (!token) {
+    //   router.push('/student/signin')
+    //   return
+    // }
+    // For preview mode, fetch with a dummy token
+    fetchDashboardData('preview-token')
   }, [router])
 
   const fetchDashboardData = async (token: string) => {
